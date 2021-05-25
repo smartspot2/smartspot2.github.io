@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LaTeX</title>
+  <link href="../favicon.ico" rel="icon"/>
+
+  <!--  Bootstrap  -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" rel="stylesheet">
+
+  <!--  Styles  -->
+  <link href="../css/styles.css" rel="stylesheet"/>
+
+  <!--  Fonts  -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+
+  <!--  Feature detection  -->
+  <script src="../js/modernizr.js"></script>
+  <!--  Handle fallback with browsers that don't support webp  -->
+  <script defer src="../js/convert_webp.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand navbar-dark bg-dark sticky-top">
+  <div class="container-sm">
+    <a class="navbar-brand">
+      <img class="nav-icon" alt="Phi" src="../assets/img/Phi-icon.png"/>
+      <span class="nav-text">Alec Li</span>
+    </a>
+    <div class="float-right">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row">
+        <li class="nav-item">
+          <a class="nav-link" href="..">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" aria-expanded="false" href="../coursework" role="button">
+            Coursework
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item active">LaTeX</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../teaching">Teaching</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container-sm">
+  <h2>LaTeX</h2>
+
+  <p>
+    I typeset all of my notes and homework in <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>,
+    using Vim as my text editor, with the
+    <a href="https://github.com/lervag/vimtex">VimTeX</a>
+    plugin for Vim+<span class="latex">L<sup>a</sup>T<sub>e</sub>X</span> incorporation,
+    and the <a href="https://github.com/SirVer/ultisnips">Ultisnips</a> plugin
+    for fast snippets while typesetting.
+
+    I'm also currently in the process of incorporating <a href="https://inkscape.org/">Inkscape</a>
+    into my typesetting process to more easily typeset diagrams.
+    Before now, I've always manually typeset diagrams using the TikZ and PGFPlots packages.
+  </p>
+  <p>
+    <a href="../assets/latex/preamble.sty">Here</a> is a link to my current <code>preamble.sty</code> file.
+    It's always evolving as I typeset more, and I will periodically update the version on this page.
+  </p>
+  <p>
+    Include it within your documents with <code>\usepackage[<i>flags</i>]{preamble}</code>.
+    To make the <code>preamble.sty</code> file available globally, put the file in <code>~/texmf/tex/latex/</code>
+    (you may have to update your settings in your local <span class="tex">T<sub>e</sub>X</span> distribution);
+    I have it as <code>~/texmf/tex/latex/styles/preamble.sty</code>.
+  </p>
+  <p>
+    Here are the possible options that you can use with my preamble; you can include multiple,
+    but flags specified later will override the previously specified flags.
+    You can include the flags as <code>\usepackage[flag1,flag2]{preamble}</code>;
+    here, <code>flag2</code> will override <code>flag1</code>.
+  </p>
+  <br>
+  <div id="preamble-flags">
+    <h5>Groups</h5>
+    <ul>
+      <li>
+        <p><code>homework</code></p>
+        <p>
+          Initializes <code>enumerate</code> environments for homework typesetting,
+          and includes all packages for diagram creation (TikZ, PGFPlots, and CircuiTikZ).
+        </p>
+      </li>
+      <li>
+        <p><code>lecture</code></p>
+        <p>
+          Initializes commands and theorem environments for typesetting lecture notes,
+          and also includes all packages for diagram creation.
+        </p>
+        <p>
+          The <code>\lecture[<i>date</i>]{<i>title</i>}</code> command
+          is added to start lectures, and the <code>example</code>, <code>definition</code>, <code>theorem</code>,
+          and <code>lemma</code> environments are added as well, using colored boxes.
+          All of these environments have optional arguments
+          <code>\begin{<i>environment</i>}[<i>title</i>][<i>label</i>]</code>.
+          Labels can be referenced by prefixing <code>ex:</code>, <code>def:</code>, <code>thm:</code>,
+          or <code>lem:</code> respectively to the <code><i>label</i></code> specified in the environment.
+        </p>
+        <p>
+          Lists of theorems, definitions, etc. can be typeset with
+          <code>\tcblistof[\section*]{<i>list name</i>}{<i>section title</i>}</code>.
+          All list names are the environment names, with the suffix <code>list</code>;
+          for example, theorems are in the list <code>theoremlist</code>.
+        </p>
+        <p>
+          This is usually the group that includes the most packages and commands.
+        </p>
+      </li>
+      <li>
+        <p><code>cheatsheet</code></p>
+        <p>
+          Initializes page margins (narrower margins) and spacing for cheatsheet creation.
+          Also includes all packages for diagram creation.
+        </p>
+        <p>
+          Best used with the <code>multicols</code> environment to include two columns in the cheatsheet.
+          See the cheatsheets linked above for reference.
+        </p>
+      </li>
+    </ul>
+    <h5>Options</h5>
+    <ul>
+      <li>
+        <p><code>tikz</code></p>
+        <p>
+          Includes the TikZ and PGFPlots package, and also includes the CircuiTikZ package.
+        </p>
+        <p>If set, the <code>circuits</code> flag will do nothing.</p>
+        <p>
+          Automatically set with the <code>homework</code>, <code>lecture</code>, and <code>cheatsheet</code> groups.
+        </p>
+      </li>
+      <li>
+        <p><code>notikz</code></p>
+        <p>
+          Excludes the TikZ package. If set, the CircuiTikZ package will never be loaded,
+          even if the <code>circuits</code> flag is set.
+        </p>
+      </li>
+      <li>
+        <p><code>circuits</code>, <code>nocircuits</code></p>
+        <p>Includes the CircuiTikZ package, or excludes the CircuiTikZ package, respectively.</p>
+        <p>
+          The latter is most commonly used in <code>[tikz,nocircuits]</code> to include TikZ but exclude CircuiTikZ.
+        </p>
+      </li>
+      <li>
+        <p><code>tcbtheorems</code></p>
+        <p>
+          Initializes theorem environments with the <code>tcolorbox</code> package,
+          making them fancier than the default environments.
+        </p>
+        <p>Automatically set with the <code>lecture</code> group.</p>
+      </li>
+      <li>
+        <p><code>notcbtheorems</code></p>
+        <p>
+          Excludes the theorem environments; most commonly used in <code>[lecture,notcbtheorems]</code>
+          if no theorems are necessary.
+        </p>
+      </li>
+      <li>
+        <p><code>asymptote</code></p>
+        <p>
+          Includes the <code>asymptote</code> package.
+          This is not included by default with any of the groups,
+          and requires the external <a href="https://asymptote.sourceforge.io/">asymptote program</a> to be installed.
+        </p>
+        <p>
+          A fair warning that the Asymptote documentation is quite bad,
+          and I've spent countless hours trying to make sense of the options.
+          Since then, I've fully switched over to using TikZ for diagram creation.
+        </p>
+      </li>
+      <li>
+        <p><code>narrowmargin</code></p>
+        <p>
+          Makes the margins smaller (0.6 inches instead of the default 1 inch).
+        </p>
+        <p>
+          Automatically set with the <code>cheatsheet</code> group.
+          Also aliased as <code>narrowmargins</code> for ease.
+        </p>
+      </li>
+      <li>
+        <p><code>fancysections</code></p>
+        <p>
+          Defines the <code>\lecture[<i>date</i>]{<i>title</i>}</code> command for fancier lecture headers.
+        </p>
+        <p>Automatically set with the <code>lecture</code> group.</p>
+      </li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>

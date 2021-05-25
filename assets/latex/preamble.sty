@@ -1,0 +1,466 @@
+\ProvidesPackage{preamble}[Alec Li's custom preamble.]
+
+% ----- Package options -----
+
+% initialize options
+
+\newif\ifopt@tikz\opt@tikzfalse
+\newif\ifopt@asymptote\opt@asymptotefalse
+\newif\ifopt@circuits\opt@circuitsfalse
+\newif\ifopt@enumerate\opt@enumeratefalse
+\newif\ifopt@tcbtheorems\opt@tcbtheoremsfalse
+\newif\ifopt@fancysections\opt@fancysectionsfalse
+
+\newif\ifopt@narrowmargin\opt@narrowmarginfalse
+
+\newif\ifoptgroup@homework\optgroup@homeworkfalse
+\newif\ifoptgroup@lecture\optgroup@lecturefalse
+\newif\ifoptgroup@cheatsheet\optgroup@cheatsheetfalse
+
+% declare options
+
+\DeclareOption{tikz}{%
+    \opt@tikztrue%
+    \opt@circuitstrue%
+}
+\DeclareOption{circuits}{\opt@circuitstrue}
+\DeclareOption{tcbtheorems}{\opt@tcbtheoremstrue}
+
+\DeclareOption{asymptote}{\opt@asymptotetrue}
+\DeclareOption{enumerate}{\opt@enumeratetrue}
+
+\DeclareOption{narrowmargin}{\opt@narrowmargintrue}
+\DeclareOption{narrowmargins}{\opt@narrowmargintrue}  % alias
+\DeclareOption{fancysections}{\opt@fancysectionstrue}
+
+\DeclareOption{notikz}{\opt@tikzfalse}
+\DeclareOption{nocircuits}{\opt@circuitsfalse}
+\DeclareOption{notcbtheorems}{\opt@tcbtheoremsfalse}
+
+% option groups
+
+\DeclareOption{homework}{%
+    \optgroup@homeworktrue
+    \opt@tikztrue%
+    \opt@circuitstrue%
+    \opt@enumeratetrue%
+}
+
+\DeclareOption{lecture}{%
+    \optgroup@lecturetrue%
+    \opt@tikztrue%
+    \opt@circuitstrue%
+    \opt@tcbtheoremstrue%
+    \opt@fancysectionstrue%
+}
+
+\DeclareOption{cheatsheet}{%
+    \optgroup@cheatsheettrue%
+    \opt@tikztrue%
+    \opt@circuitstrue%
+    \opt@narrowmargintrue%
+}
+
+\DeclareOption*{%
+    \PackageWarning{preamble}{Unknown option '\CurrentOption'}
+}
+
+\ExecuteOptions{}
+\ProcessOptions*
+
+% ----- Packages -----
+
+% AMS
+\RequirePackage{amsmath, amsthm}
+
+% Font
+\RequirePackage[T1]{fontenc}
+\RequirePackage{newtxtext}
+\RequirePackage[smallerops]{newtxmath}
+
+% Math shortcuts
+\RequirePackage{physics, systeme, mathtools, nccmath}
+\RequirePackage{centernot}  % \centernot command
+\RequirePackage{cancel}  % cancel numbers
+\RequirePackage{signchart}  % sign charts
+\RequirePackage{multirow}
+\RequirePackage{thmtools}
+\RequirePackage{kbordermatrix}
+
+% Math font
+% \RequirePackage{mathrsfs}  % Raph Smith's Formal Script font
+
+% Tables
+\RequirePackage{booktabs}  % Improved tables
+
+% Graphics
+\RequirePackage{graphicx}  % External graphics
+\RequirePackage[all]{xy}  % Diagrams
+\ifopt@narrowmargin
+    \RequirePackage[margin=0.6in, headheight=14pt, headsep=10pt]{geometry}
+\else
+    \RequirePackage[margin=1in, headheight=14pt]{geometry}
+\fi
+\RequirePackage{xcolor}  % Colored text
+
+% Headers
+\RequirePackage{fancyhdr, titling}
+\RequirePackage[explicit]{titlesec}  % fancy section headers
+\RequirePackage{titletoc}
+
+% Formatting
+\RequirePackage{multicol}  % Multiple columns in document
+\RequirePackage{parskip, float}
+\RequirePackage{microtype}  % Micro-kerning
+\RequirePackage{enumitem}  % enumerate item labels
+\RequirePackage{aliascnt}  % creating counter aliases
+\RequirePackage{bm}
+\RequirePackage{changepage}  % custom margin adjustment
+\RequirePackage{pdflscape}  % landscape pages
+\RequirePackage{siunitx}  % formatting SI units
+\RequirePackage{oubraces}  % better over/under braces
+\RequirePackage{textcomp}
+
+% Code input formatting
+\RequirePackage{listings}  % code environment
+\lstset{basicstyle=\footnotesize\ttfamily,columns=fullflexible,numbers=left}
+
+% Misc.
+\RequirePackage{comment}  % Comment environments
+\RequirePackage{xr}  % Cross-references between subfiles
+\RequirePackage{subfiles}
+\RequirePackage{ifthen}  % latex if/else conditionals
+\RequirePackage{suffix}  % commands with suffix
+\RequirePackage{xparse}  % custom commands
+\RequirePackage{xstring}  % string manipulation commands
+\RequirePackage{etoolbox}  % various utilities for command creation
+
+% References
+\RequirePackage[hidelinks]{hyperref}  % Links
+\RequirePackage{cleveref}  % better references
+\RequirePackage{bookmark}  % hyperref extension
+
+% Tikz, pgfplots
+\ifopt@tikz
+    \RequirePackage{tikz, pgfplots}  % Drawings
+    \RequirePackage{tikz-qtree}  % Easy trees in tikz
+    \RequirePackage{tikz-3dplot}  % 3d views
+
+    % Circuits
+    \ifopt@circuits
+        \RequirePackage[american,oldvoltagedirection,straightlabels,siunitx]{circuitikz}  % Circuits
+        \RequirePackage[electronic]{ifsym}  % circuit comparator label with \FallingEdge or \RaisingEdge
+
+        \tikzset{highlight/.style={opacity=0.5, line width=2pt}}
+        \ctikzset{monopoles/vcc/arrow={Bar[width=3mm]}}  % Change VDD/VSS arrows to bars
+        \ctikzset{monopoles/vee/arrow={Bar[width=3mm]}}
+    \fi
+
+    \pgfplotsset{compat=1.17}
+
+    \usetikzlibrary{calc,trees,positioning,arrows,fit,shapes,calc,intersections,fadings,decorations.pathmorphing,matrix}
+    \usepgfplotslibrary{fillbetween}
+
+    % Markov chains
+    \usetikzlibrary{automata}
+    \tikzset{%
+        >=latex,
+        every state/.style={thick, fill=gray!10},
+        /tikz/markov/.style={%
+            ->,  % directed edges
+            every picture/.style={line width=0.75pt},
+            node distance=2.5cm,
+            initial text=$ $,
+            every loop/.style={looseness=5},
+            loop left/.append style={in=155, out=-155, looseness=5},  % change shape of loops
+            loop right/.append style={in=-25, out=25, looseness=5},
+            loop above/.append style={in=65, out=115, looseness=5},
+            loop below/.append style={in=-115, out=-65, looseness=5},
+        }
+    }
+    % 3d plots
+    \tikzset{%
+        /tikz/3dplot/.style={%
+            /pgfplots/every axis/.append style={
+                xlabel style={anchor=south west},
+                ylabel style={anchor=south west},
+                zlabel style={anchor=south west}
+            },
+            /pgfplots/every axis plot/.append style={surf,shader=faceted,opacity=0.5}
+        }
+    }
+\fi
+
+% Asymptote
+\ifopt@asymptote
+    \RequirePackage{asymptote}
+    \def\asydir{asy}  % Custom directory for asymptote files
+\fi
+
+% Remove derivative shortcuts from physics package
+\let\differential\undefined%
+\let\derivative\undefined%
+\let\partialderivative\undefined%
+\let\variation\undefined%
+\let\functionalderivative\undefined%
+\let\dd\undefined%
+\let\diffd\undefined%
+\let\dv\undefined%
+\let\pdv\undefined%
+\let\pderivative\undefined%
+\let\var\undefined%
+\let\fdv\undefined%
+\let\grad\undefined%
+\let\gradient\undefined%
+\let\absolutevalue\undefined%
+
+\usepackage[ISO]{diffcoeff}  % Derivatives; imported afterward to avoid conflicts with physics
+% change evaluation bar to |
+\diffdef{}{left-delim=\left ., right-delim=\right |, subscr-nudge=0mu}
+\diffdef{p}{op-symbol=\partial, left-delim=\left ., right-delim=\right |, subscr-nudge=0mu}
+\RenewDocumentCommand\diffp{}{\diff.p.}
+
+% ----- Math Operators -----
+
+\DeclareMathOperator{\proj}{proj}  % Projection
+\DeclareMathOperator{\Span}{span}  % Vector/Matrix Span
+\DeclareMathOperator{\range}{range}  % Range (span of columns)
+\DeclareMathOperator{\Null}{N}  % Null space
+\DeclareMathOperator{\Cols}{C}  % Col space
+\DeclareMathOperator{\corr}{corr}  % correlation
+
+\DeclareMathOperator{\from}{\colon}
+\newcommand{\divides}{\mid}
+\newcommand{\notdivides}{\nmid}
+\newcommand{\powerset}{\mathscr{P}}
+
+\renewcommand{\Pr}{\operatorname{\mathbb{P}}\mathopen{}\qty}  % Probability
+\WithSuffix\newcommand\Pr*{\operatorname{\mathbb{P}}\mathopen{}}  % Probability (no qty)
+\newcommand{\Exp}{\operatorname{\mathbb{E}}\mathopen{}\qty}  % Expected value
+\WithSuffix\newcommand\Exp*{\operatorname{\mathbb{E}}\mathopen{}}  % Expected value (no qty)
+\newcommand{\LLSE}{\operatorname{\mathbb{L}}\mathopen{}\qty}  % Linear least squares estimator
+\WithSuffix\newcommand\LLSE*{\operatorname{\mathbb{L}}\mathopen{}}  % Linear least squares estimator (no qty)
+\DeclareMathOperator{\Var}{Var}  % Variance
+\DeclareMathOperator{\Cov}{Cov}  % Covariance
+\DeclareMathOperator{\Corr}{Corr}  % Correlation
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\renewcommand{\va}[1]{\vec{\bm{#1}}}  % Vector with italic bold
+\newcommand{\mat}[1]{\mathbf{#1}}  % Matrix variable
+\newcommand{\dd}{\dl3}
+\newcommand{\ddel}{\dl.delta.3}
+\newcommand{\ddp}{\dl.p.3}
+\newcommand{\definedas}{\coloneqq}
+
+% matrix row/column vector rules
+% \newcommand{\rowrule}{\rotatebox[origin=c]{90}{$\vert$}}
+\newcommand{\rowrule}{\rule[.5ex]{1em}{0.4pt}}
+\newcommand{\colrule}{\vert}
+
+\renewcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\renewcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\vinner}[1]{\left\langle#1\right\rangle}  % Inner product
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+
+% Distributions
+\DeclareMathOperator{\Unif}{Uniform}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Bern}{Bernoulli}
+\DeclareMathOperator{\Geom}{Geom}
+\DeclareMathOperator{\Pois}{Pois}
+\DeclareMathOperator{\Expdist}{Exp}
+\DeclareMathOperator{\Norm}{\mathcal{N}}
+\DeclareMathOperator{\PP}{PP}
+\DeclareMathOperator{\Erlang}{Erlang}
+
+% ----- Commands -----
+
+% matrix augment
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+    \hskip -\arraycolsep%
+    \let\@ifnextchar\new@ifnextchar%
+    \array{#1}
+}
+
+\NewDocumentCommand{\grad}{e{_^}}{% gradient replacement, from egreg
+    \mathop{}\!% \mathop for good spacing before \nabla
+    \nabla
+    \IfValueT{#1}{_{\!#1}}% tuck in the subscript
+    \IfValueT{#2}{^{#2}}% possible superscript
+}
+
+% Zero-pad
+\ExplSyntaxOn%
+\NewExpandableDocumentCommand{\padinteger}{mm}{%
+    \int_compare:nNnTF{#2}<{0}{%
+        - \kuttens_padinteger:nn { #1 } { -#2 }
+        }{%
+        \kuttens_padinteger:nn { #1 } { #2 }
+    }
+}
+\cs_new:Nn \kuttens_padinteger:nn{%
+    \prg_replicate:nn{#1-\tl_count:f{\int_to_arabic:n{#2}}}{0}
+    \int_to_arabic:n{#2}
+}
+\cs_generate_variant:Nn \tl_count:n{f}
+\ExplSyntaxOff%
+
+% include subfiles, with a prefix, in a range of numbers, zero-padded to the left
+\newcommand\seqsubfile[4][0]{%
+    \ifnum #1=0
+        \def\endidx{#4}
+        \StrLen{\endidx}[\endidxlen]
+    \else
+        \def\endidxlen{#1}
+    \fi
+    \foreach \idx in {#3, ..., #4}{%
+        \def\formatidx{\padinteger{\endidxlen}{\idx}}
+        \subfile{#2\formatidx.tex}
+    }
+}
+
+% ----- Theorems -----
+
+% define if outside of conditional
+\newif\ifintcbthm%
+
+\ifopt@tcbtheorems
+    \RequirePackage{xargs}  % multiple optional arguments
+    \RequirePackage{tcolorbox}  % colored boxes
+    \tcbuselibrary{theorems}  % use of colored boxes for theorem environments
+    \tcbuselibrary{breakable}
+    \tcbuselibrary{skins}
+
+    \newtcbtheorem[number within=section, list inside=examplelist]{tcbexample}{Example}{%
+        colback=gray!5, colbacktitle=gray!40, coltitle=black,
+        frame hidden, arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
+        fonttitle=\bfseries, breakable, enhanced, parbox=false
+    }{ex}
+    \newenvironmentx{example}[2][1={},2={}]{%
+        \begin{tcbexample}{#1}{#2}
+            }{%
+        \end{tcbexample}
+    }
+    \newtcbtheorem[number within=section, list inside=definitionlist]{tcbdefinition}{Definition}{%
+        colback=red!5, colbacktitle=red!20, coltitle=black,
+        frame hidden, arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
+        fonttitle=\bfseries, breakable, enhanced, parbox=false
+    }{def}
+    \newenvironmentx{definition}[2][1={},2={}]{%
+        \begin{tcbdefinition}{#1}{#2}
+            }{%
+        \end{tcbdefinition}
+    }
+    \newtcbtheorem[number within=section, list inside=theoremlist]{tcbtheorem}{Theorem}{%
+        enhanced, breakable,
+        colback=blue!5, colbacktitle=blue!20, coltitle=black,
+        frame hidden, parbox=false,
+        arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
+        fonttitle=\bfseries,
+        segmentation style={solid, draw=blue!20, line width=1pt}
+    }{thm}
+    \newenvironmentx{theorem}[2][1={},2={}]{%
+        \intcbthmtrue
+        \begin{tcbtheorem}{#1}{#2}%
+            }{
+        \end{tcbtheorem}
+        \intcbthmfalse%
+    }
+    \newtcbtheorem[number within=section, list inside=lemmalist]{tcblemma}{Lemma}{%
+        enhanced, breakable,
+        colback=blue!5, colbacktitle=blue!20, coltitle=black,
+        frame hidden, parbox=false,
+        arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
+        fonttitle=\bfseries,
+        segmentation style={solid, draw=blue!20, line width=1pt}
+    }{lem}
+    \newenvironmentx{lemma}[2][1={},2={}]{%
+        \intcbthmtrue%
+        \begin{tcblemma}{#1}{#2}
+            }{%
+        \end{tcblemma}
+        \intcbthmfalse%
+    }
+    % redefine proof environment
+    \expandafter\let\expandafter\oldproof\csname\string\proof\endcsname%
+    \let\oldendproof\endproof%
+    \renewenvironment{proof}[1][\proofname]{%
+        \ifintcbthm\tcbline*\fi
+        \oldproof[#1]
+        }{\oldendproof}
+    % cleveref definitions
+    \crefname{tcb@cnt@tcbexample}{example}{examples}
+    \Crefname{tcb@cnt@tcbexample}{Example}{Examples}
+    \crefname{tcb@cnt@tcbdefinition}{definition}{definitions}
+    \Crefname{tcb@cnt@tcbdefinition}{Definition}{Definitions}
+    \crefname{tcb@cnt@tcbtheorem}{theorem}{theorems}
+    \Crefname{tcb@cnt@tcbtheorem}{Theorem}{Theorems}
+    \crefname{tcb@cnt@tcblemma}{lemma}{lemmas}
+    \Crefname{tcb@cnt@tcblemma}{Lemma}{Lemmas}
+\else
+    % plain theorems
+    \newtheorem{theorem}{Theorem}[section]
+    \newtheorem{lemma}{Lemma}[section]
+    \newtheorem{definition}{Definition}[section]
+\fi
+
+% Fancy section titles
+\ifopt@fancysections
+    \def\sec@sectiondate{}
+    \def\sec@sectiondesc{}
+    \newcommand\sectiondate[1]{\def\sec@sectiondate{#1}}
+    \newcommand\sectiondesc[1]{\def\sec@sectiondesc{#1}}
+
+    \titleclass{\lecturesection}{straight}[\chapter]
+    \newcommand{\toclevel@lecturesection}{1}
+    \newcommand{\ttll@lecturesection}{1}
+    \newcommand{\thelecturesection}{\arabic{lecturesection}}
+    \titleclass{\section}{straight}{\chapter}
+    \newaliascnt{lecturesection}{section}
+    \contentsmargin{1.5em}
+    \titlecontents{lecturesection}[1.5em]{\addvspace{1em}\bfseries}{\contentslabel{1.5em}}{}{\hfill\contentspage}
+    \titlespacing*{\lecturesection}{0pt}{2\baselineskip}{1\baselineskip}
+
+    \newcommand\lecture[2][]{\ifthenelse{\equal{#1}{}}{\sectiondate{}}{\sectiondate{#1}}
+    \sectiondesc{#2}\lecturesection[#2]{Lecture \thesection}}
+
+    \titleformat{\lecturesection}[frame]
+    {\normalfont}
+    {\ifthenelse{\equal{\sec@sectiondate}{}}{}{\filright\enspace\itshape\sec@sectiondate\enspace}}
+    {3pt}
+    {\centering{\Large\bfseries\filcenter#1}
+    \ifthenelse{\equal{\sec@sectiondesc}{}}{}{\\[3pt] {\normalsize\itshape\sec@sectiondesc}}}
+    [\def\sec@sectiondate{}\def\sec@sectiondesc{}]
+\fi
+
+% ----- Environments -----
+
+\newenvironment{answer}{%
+    \begin{adjustwidth}{1.25em}{1.25em}
+        \color{blue!80!black}
+        \tikzset{color=blue!80!black}
+        }{%
+        \tikzset{color=black}
+    \end{adjustwidth}
+}
+
+% ----- Enumerate labels -----
+
+\ifopt@enumerate
+    \setlist[enumerate, 1]{label=(\alph*)}
+    \setlist[enumerate, 2]{label=(\roman*)}
+\fi
+
+% displaymath spacing
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{4pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\belowdisplayshortskip}{4pt}
+\allowdisplaybreaks[1]
+
+% add table of contents as a bookmark
+\pretocmd{\tableofcontents}{\belowpdfbookmark{\contentsname}{toc}}{}{}
+

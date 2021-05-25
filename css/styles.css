@@ -1,0 +1,222 @@
+body {
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+nav, h1, h2, h3, h4, h5 {
+    font-family: "Open Sans", sans-serif;
+}
+
+code {
+    font-family: "Fira Code", monospace;
+}
+
+main {
+    margin: 25px;
+}
+
+p {
+    margin-bottom: 0.25rem;
+}
+
+/* Dropdown on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+/* Navbar */
+
+.nav-icon {
+    width: 50px;
+}
+
+nav {
+    /* disable selection of nav items when active */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+nav a {
+    /* disable dragging of links */
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+.navbar .dropdown-item {
+    /* emulate nav-link */
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.navbar .dropdown-item.active {
+    /* remove ugly blue highlight */
+    background-color: transparent;
+}
+
+.navbar .dropdown-item:hover:not(.active) {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar .dropdown-menu {
+    min-width: 0;
+    width: 100%;
+    background-color: #212529fa; /* color from bootstrap bs-dark */
+}
+
+/* Add more padding to small screens */
+
+@media (max-width: 576px) {
+    main {
+        padding: 0 10% !important;
+    }
+}
+
+/* Home */
+
+#img-headshot {
+    width: 150px;
+    margin: 10px 25px 3px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+}
+
+#intro-links {
+    margin: auto;
+    width: fit-content;
+}
+
+.intro-link {
+    height: 20px;
+}
+
+#intro-email-link {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#intro-right {
+    width: fit-content;
+    margin: 0;
+}
+
+#intro-div {
+    height: 30vh;
+    margin-bottom: 50px;
+}
+
+/* Projects */
+
+#projects {
+    margin-top: 10px;
+}
+
+div.project-card {
+    margin: 5px;
+}
+
+.project-card-title {
+    flex: 100%;
+}
+
+.github-link {
+    flex: 0; /* all the way to the right */
+    vertical-align: center;
+    float: right;
+    margin: auto;
+}
+
+.github-img {
+    display: block;
+    float: right;
+    width: 1.5em;
+    margin: auto;
+}
+
+.github-img:hover {
+    opacity: 75%;
+}
+
+#sorting-visualizer, #sorting-visualizer-div canvas {
+    opacity: 1;
+    margin-top: -7px;
+    margin-bottom: -22px;
+}
+
+#sorting-visualizer-div canvas {
+    z-index: -1000;
+}
+
+#sorting-visualizer-div .ff-container::before {
+    display: none;
+}
+
+#sorting-visualizer-div {
+    position: relative;
+    z-index: 3;
+}
+
+.img-crop {
+    overflow: hidden;
+}
+
+.freezeframe-overlay {
+    position: absolute;
+    margin-top: -7px;
+    z-index: 1;
+    opacity: 1;
+    -webkit-transition: opacity 250ms ease-in-out;
+    -moz-transition: opacity 250ms ease-in-out;
+    -ms-transition: opacity 250ms ease-in-out;
+    -o-transition: opacity 250ms ease-in-out;
+    transition: opacity 250ms ease-in-out;
+}
+
+.freezeframe-gif {
+    position: relative;
+}
+
+/* Project masonry media queries with bootstrap breakpoints */
+
+@media (min-width: 576px) {
+    .project-card {
+        max-width: 45%;
+    }
+}
+
+@media (min-width: 768px) {
+    .project-card {
+        max-width: 30%;
+    }
+}
+
+@media (min-width: 992px) {
+    .project-card {
+        max-width: 23%;
+    }
+}
+
+/* LaTeX logo */
+
+.tex sub, .latex sub, .latex sup {
+    text-transform: uppercase;
+}
+
+.tex sub, .latex sub {
+    vertical-align: 0.0ex;
+    margin-left: -0.25em;
+    margin-right: -0.1em;
+}
+
+.tex, .latex, .tex sub, .latex sub {
+    font-size: 1em;
+}
+
+.latex sup {
+    font-size: 0.85em;
+    vertical-align: -0.35em;
+    margin-left: -0.36em;
+    margin-right: -0.15em;
+}

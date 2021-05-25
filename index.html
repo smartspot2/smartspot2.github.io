@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Alec Li</title>
+  <link href="favicon.ico" rel="icon"/>
+
+  <!--  Bootstrap  -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
+  <script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!--  Styles  -->
+  <link href="css/styles.css" rel="stylesheet"/>
+
+  <!--  Fonts  -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+
+  <!--  Feature detection  -->
+  <script src="js/modernizr.js"></script>
+  <!--  Handle fallback with browsers that don't support webp  -->
+  <script defer src="js/convert_webp.js"></script>
+
+  <!--  Masonry JS  -->
+  <script async src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand navbar-dark bg-dark sticky-top">
+  <div class="container-sm">
+    <a class="navbar-brand">
+      <img class="nav-icon" alt="Phi" data-fallback-filetype="png" src="assets/img/Phi-icon.webp"/>
+      <span class="nav-text">Alec Li</span>
+    </a>
+    <div class="float-right">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row">
+        <li class="nav-item">
+          <a class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" aria-expanded="false" href="coursework" role="button">
+            Coursework
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="coursework/latex.html">LaTeX</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="teaching">Teaching</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container-sm">
+  <div id="intro-div" class="container-fluid d-flex flex-row align-items-center mx-auto justify-content-center">
+    <div id="intro-left">
+      <img id="img-headshot" alt="Alec Li" data-fallback-filetype="jpg" src="assets/img/AlecLi.webp"/>
+      <div id="intro-links">
+        <a class="text-decoration-none" href="https://www.linkedin.com/in/alec-li-84745b168/" target="_blank">
+          <img class="intro-link" alt="LinkedIn" data-fallback-filetype="png" src="assets/img/LI-In-Bug.webp"/>
+        </a>
+        <a class="text-decoration-none" href="https://github.com/smartspot2" target="_blank">
+          <img class="intro-link" alt="GitHub" data-fallback-filetype="png" src="assets/img/Github-Mark-32px.webp"/>
+        </a>
+        <a id="intro-email-link" class="text-decoration-none">
+          <img class="intro-link" alt="Email" src="assets/img/envelope.svg"/>
+        </a>
+      </div>
+    </div>
+    <div id="intro-right" class="container-fluid">
+      <h2>Hi!</h2>
+      <p>My name is Alec Li and I'm a Computer Science and Applied Math double major at UC Berkeley.</p>
+      <p>I also enjoy composing music, playing tetris, swimming, and tackling random puzzles I find on the internet.</p>
+    </div>
+  </div>
+
+  <h3>Projects</h3>
+
+  <div id="projects" data-masonry='{ "itemSelector": ".project-card"}'>
+    <div class="card project-card">
+      <div class="card-header d-flex flex-row align-items-center">
+        <a class="text-decoration-none project-card-title"
+           href="https://smartspot2.github.io/canvas-grade-calculator" target="_blank">
+          <b>Canvas Grade Calculator</b>
+        </a>
+        <a class="github-link"
+           href="https://github.com/smartspot2/canvas-grade-calculator" target="_blank">
+          <img class="github-img" alt="Github" data-fallback-filetype="png" src="assets/img/Github-Mark-32px.webp">
+        </a>
+      </div>
+      <img class="card-img-top project-img"
+           alt="Canvas Grade Calculator" data-fallback-filetype="jpg" src="assets/img/CanvasGradeCalculator.webp"/>
+      <div class="card-body">
+        A website built with Angular and Typescript to help students
+        easily manage, calculate, and predict grades in classes that use Canvas LMS.
+
+        Includes a text parser to convert raw pasted webpage text into Angular components,
+        utilizing local browser storage to persist parsed data.
+
+        Grade distributions for assignments are also illustrated in responsive box plots with d3.js.
+      </div>
+    </div>
+
+    <div class="card project-card">
+      <div class="card-header d-flex flex-row align-items-center">
+        <a class="text-decoration-none project-card-title"
+           href="https://smartspot2.github.io/geo10-map-quiz" target="_blank">
+          <b>GEOG10 Map Quizzes</b>
+        </a>
+        <a class="github-link"
+           href="https://github.com/smartspot2/geo10-map-quiz" target="_blank">
+          <img class="github-img" alt="Github" data-fallback-filetype="png" src="assets/img/Github-Mark-32px.webp">
+        </a>
+      </div>
+      <img class="card-img-top project-img"
+           alt="GEOG0 Map Quiz" data-fallback-filetype="jpg" src="assets/img/Geo10MapQuiz.webp"/>
+      <div class="card-body">
+        A website built in vanilla HTML and JS, with manually edited SVG maps
+        to help students in Berkeley's GEOG10 course with map quizzes of all continents and the world map.
+
+        Utilizes JavaScript to handle timers and quiz functionality,
+        including the scrollable and resizable map interface.
+      </div>
+    </div>
+
+    <div class="card project-card">
+      <div class="card-header d-flex flex-row align-items-center">
+        <span class="project-card-title">
+          <b>Sorting Visualizer</b>
+        </span>
+        <a class="github-link"
+           href="https://github.com/smartspot2/sort-visualization" target="_blank">
+          <img class="github-img" alt="Github" data-fallback-filetype="png" src="assets/img/Github-Mark-32px.webp">
+        </a>
+      </div>
+      <div id="sorting-visualizer-div" class="img-crop freezeframe">
+        <img class="card-img-top project-img freezeframe-overlay"
+             alt="Sorting Visualizer" data-fallback-filetype="gif"
+             src="assets/img/RadixSortLSD_preview.webp"/>
+        <img id="sorting-visualizer"
+             class="card-img-top project-img freezeframe-gif"
+             alt="Sorting Visualizer" data-fallback-filetype="gif"
+             src="assets/img/RadixSortLSD.webp"/>
+      </div>
+      <div class="card-body">
+        A Processing 3 and JavaFX applet for visualizing 20+ different kinds of sorts.
+
+        All sorts are animated and annotated with highlights and short descriptions at each step.
+        Also includes documentation for each sort, describing the algorithm and time/space complexities.
+      </div>
+    </div>
+
+    <div class="card project-card">
+      <div class="card-header d-flex flex-row align-items-center">
+        <a class="text-decoration-none project-card-title"
+           href="https://smartspot2.github.io/tetris-ai" target="_blank">
+          <b>Tetris AI</b>
+        </a>
+        <a class="github-link"
+           href="https://github.com/smartspot2/tetris-ai" target="_blank">
+          <img class="github-img" alt="Github" data-fallback-filetype="png" src="assets/img/Github-Mark-32px.webp">
+        </a>
+      </div>
+      <img class="card-img-top project-img"
+           alt="Tetris AI" data-fallback-filetype="jpg" src="assets/img/TetrisAI.webp"/>
+      <div class="card-body">
+        A web app built with p5.js, simulating the traditional game of Tetris.
+
+        Includes a fully configurable AI using a fitness score
+        composed of various statistics like
+        line clears, board height, number of holes, etc.
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--  Handle preview and pausing of animated images  -->
+<script lang="text/javascript" type="module">
+  const freezeframes = document.getElementsByClassName('freezeframe');
+
+  for (let div of freezeframes) {
+    let overlay = div.getElementsByClassName('freezeframe-overlay').item(0);
+    let gif = div.getElementsByClassName('freezeframe-gif').item(0);
+    let img = new Image();
+    img.src = gif.src;  // preload image
+
+    overlay.addEventListener('mouseenter', () => {
+      overlay.style.opacity = '0';
+      gif.setAttribute('src', img.src)  // reset src to reload gif
+    });
+    overlay.addEventListener('mouseleave', () => {
+      overlay.style.opacity = '1';
+    });
+  }
+</script>
+<!--  Copy email to clipboard  -->
+<script lang="text/javascript">
+  let emailLink = document.getElementById('intro-email-link');
+  let emaillinkTooltip = new bootstrap.Tooltip(emailLink,
+      {'trigger': 'manual', 'placement': 'bottom', 'title': 'Copied to clipboard!'}
+  );
+  emailLink.addEventListener('click', () => {
+    // Yeah no you're not gonna get the email that easily from web scraping.
+    // let encoded = 'PTAyYmo1Q2JwRldibkJrTTA5R2N6Um5jaDEyYw==';  // personal
+    let encoded = 'PVVIWmw1U2VseFdackpYWmlCVWFzNXlZbHhXWQ==';  // berkeley
+    let textArea = document.createElement('textarea');
+    textArea.value = atob(atob(encoded).split('').reverse().join(''));
+    textArea.style.opacity = '0';
+    emailLink.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    document.execCommand('copy');
+    emailLink.removeChild(textArea);
+    emaillinkTooltip.show();
+    setTimeout(() => {
+      emaillinkTooltip.hide()
+    }, 1000);
+  });
+</script>
+</body>
+</html>
