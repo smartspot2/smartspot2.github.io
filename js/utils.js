@@ -28,8 +28,8 @@ let emaillinkTooltip = new bootstrap.Tooltip(emailLink,
 );
 emailLink.addEventListener('click', () => {
   // Yeah no you're not gonna get the email that easily from web scraping.
-  // let encoded = 'PTAyYmo1Q2JwRldibkJrTTA5R2N6Um5jaDEyYw==';  // personal
-  let encoded = 'PVVIWmw1U2VseFdackpYWmlCVWFzNXlZbHhXWQ==';  // berkeley
+  let encoded = 'PTAyYmo1Q2JwRldibkJrTTA5R2N6Um5jaDEyYw==';  // personal
+  // let encoded = 'PVVIWmw1U2VseFdackpYWmlCVWFzNXlZbHhXWQ==';  // berkeley
   let textArea = document.createElement('textarea');
   textArea.value = atob(atob(encoded).split('').reverse().join(''));
   textArea.style.opacity = '0';
