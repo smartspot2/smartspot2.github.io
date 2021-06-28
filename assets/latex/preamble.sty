@@ -1,17 +1,22 @@
-\ProvidesPackage{preamble}[Alec Li's custom preamble.]
+\ProvidesPackage{preamble}
 
 % ----- Package options -----
 
 % initialize options
 
-\newif\ifopt@tikz\opt@tikzfalse
-\newif\ifopt@asymptote\opt@asymptotefalse
+\newif\ifopt@tikz\opt@tikztrue  % default true
 \newif\ifopt@circuits\opt@circuitsfalse
 \newif\ifopt@enumerate\opt@enumeratefalse
+
 \newif\ifopt@tcbtheorems\opt@tcbtheoremsfalse
 \newif\ifopt@fancysections\opt@fancysectionsfalse
 
-\newif\ifopt@narrowmargin\opt@narrowmarginfalse
+\newif\ifopt@cheatsheetlengths\opt@cheatsheetlengthsfalse
+\newif\ifopt@smallercomponents\opt@smallercomponentsfalse
+\newif\ifopt@narrowmargins\opt@narrowmarginsfalse
+
+\newif\ifopt@asymptote\opt@asymptotefalse
+\newif\ifopt@minted\opt@mintedfalse
 
 \newif\ifoptgroup@homework\optgroup@homeworkfalse
 \newif\ifoptgroup@lecture\optgroup@lecturefalse
@@ -29,18 +34,22 @@
 \DeclareOption{asymptote}{\opt@asymptotetrue}
 \DeclareOption{enumerate}{\opt@enumeratetrue}
 
-\DeclareOption{narrowmargin}{\opt@narrowmargintrue}
-\DeclareOption{narrowmargins}{\opt@narrowmargintrue}  % alias
+\DeclareOption{narrowmargins}{\opt@narrowmarginstrue}
+\DeclareOption{cheatsheetlengths}{\opt@cheatsheetlengthstrue}
+\DeclareOption{smallercomponents}{\opt@smallercomponentstrue}
 \DeclareOption{fancysections}{\opt@fancysectionstrue}
+\DeclareOption{minted}{\opt@mintedtrue}
 
 \DeclareOption{notikz}{\opt@tikzfalse}
 \DeclareOption{nocircuits}{\opt@circuitsfalse}
 \DeclareOption{notcbtheorems}{\opt@tcbtheoremsfalse}
+\DeclareOption{nocheatsheetlengths}{\opt@cheatsheetlengthsfalse}
+\DeclareOption{nosmallercomponents}{\opt@smallercomponentsfalse}
 
 % option groups
 
 \DeclareOption{homework}{%
-    \optgroup@homeworktrue
+    \optgroup@homeworktrue%
     \opt@tikztrue%
     \opt@circuitstrue%
     \opt@enumeratetrue%
@@ -58,7 +67,9 @@
     \optgroup@cheatsheettrue%
     \opt@tikztrue%
     \opt@circuitstrue%
-    \opt@narrowmargintrue%
+    \opt@narrowmarginstrue%
+    \opt@cheatsheetlengthstrue%
+    \opt@smallercomponentstrue%
 }
 
 \DeclareOption*{%
@@ -79,13 +90,18 @@
 \RequirePackage[smallerops]{newtxmath}
 
 % Math shortcuts
-\RequirePackage{physics, systeme, mathtools, nccmath}
+\RequirePackage{siunitx}  % formatting SI units (loaded before physics to avoid warning)
+\RequirePackage{physics-minimal, systeme, mathtools, nccmath}
 \RequirePackage{centernot}  % \centernot command
 \RequirePackage{cancel}  % cancel numbers
 \RequirePackage{signchart}  % sign charts
 \RequirePackage{multirow}
 \RequirePackage{thmtools}
-\RequirePackage{kbordermatrix}
+\RequirePackage{kbordermatrix}  % border text on matrices
+\RequirePackage[replace]{widebar}  % custom package for wider/better \bar{}
+
+% siunitx per symbol
+\sisetup{per-mode=symbol}
 
 % Math font
 % \RequirePackage{mathrsfs}  % Raph Smith's Formal Script font
@@ -96,7 +112,7 @@
 % Graphics
 \RequirePackage{graphicx}  % External graphics
 \RequirePackage[all]{xy}  % Diagrams
-\ifopt@narrowmargin
+\ifopt@narrowmargins
     \RequirePackage[margin=0.6in, headheight=14pt, headsep=10pt]{geometry}
 \else
     \RequirePackage[margin=1in, headheight=14pt]{geometry}
@@ -117,13 +133,55 @@
 \RequirePackage{bm}
 \RequirePackage{changepage}  % custom margin adjustment
 \RequirePackage{pdflscape}  % landscape pages
-\RequirePackage{siunitx}  % formatting SI units
 \RequirePackage{oubraces}  % better over/under braces
 \RequirePackage{textcomp}
 
+% multicols columnbreak vertical fill
+\let\oldcolumnbreak\columnbreak
+\renewcommand\columnbreak{\vfill\null\oldcolumnbreak}
+
 % Code input formatting
 \RequirePackage{listings}  % code environment
-\lstset{basicstyle=\footnotesize\ttfamily,columns=fullflexible,numbers=left}
+% Atom One Light color scheme (https://github.com/atom/atom/tree/master/packages/one-light-syntax/styles)
+\definecolor{lstfgcolor}{RGB}{56, 58, 66}  % HSL(230, 8%, 24%); black
+\definecolor{lstbgcolor}{RGB}{250, 250, 250}  % HSL(230, 1%, 98%); white
+\definecolor{lstcommentcolor}{RGB}{160, 161, 167}  % HSL(230, 4%, 64%); gray
+\definecolor{lstidentifiercolor}{RGB}{228, 86, 73}  % HSL(5, 74%, 59%); red
+\definecolor{lststringcolor}{RGB}{93, 147, 92}  % HSL(119, 23%, 47%); green
+\definecolor{lstkeywordcolor}{RGB}{166, 38, 164}  % HSL(301, 63%, 40%); purple
+\definecolor{lstlinenumbercolor}{RGB}{157, 157, 159}  % HSL(230, 1%, 62%)
+\lstset{%
+    columns=fullflexible,
+    numbers=left,
+    upquote=true,
+    % colors
+    backgroundcolor=\color{lstbgcolor},
+    basicstyle=\color{lstfgcolor}\footnotesize\ttfamily,
+    commentstyle=\color{lstcommentcolor}\itshape,
+    identifierstyle={},%\color{lstidentifiercolor},
+    stringstyle=\color{lststringcolor},
+    keywordstyle=\color{lstkeywordcolor},%\bfseries,
+    numberstyle=\color{lstlinenumbercolor}\ttfamily,
+}
+
+% Alternative code formatting with minted package
+\ifopt@minted
+    \RequirePackage[outputdir=out]{minted}
+    \RequirePackage{fancyvrb}
+    \setminted{%
+        autogobble,
+        breaklines,
+        linenos,
+        mathescape,
+        python3,
+        fontsize=\footnotesize,
+        bgcolor=lstbgcolor,
+        numbersep=10pt,
+        style=atomonelight,  % custom minted style; falls back to default style
+    }
+    \renewcommand{\theFancyVerbLine}{\ttfamily \textcolor{lstlinenumbercolor}{\arabic{FancyVerbLine}}}
+    \fvset{listparameters=\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}}
+\fi
 
 % Misc.
 \RequirePackage{comment}  % Comment environments
@@ -154,6 +212,15 @@
         \tikzset{highlight/.style={opacity=0.5, line width=2pt}}
         \ctikzset{monopoles/vcc/arrow={Bar[width=3mm]}}  % Change VDD/VSS arrows to bars
         \ctikzset{monopoles/vee/arrow={Bar[width=3mm]}}
+
+        % resize - characters to occupy same space as +
+        \ctikzset{bipoles/vsourceam/inner minus/.initial={$\vphantom{+}-$}}
+        \ctikzset{bipoles/cvsourceam/inner minus/.initial={$\vphantom{+}-$}}
+        \ctikzset{voltage/american minus/.initial={$\vphantom{+}-$}}
+
+        \ifopt@smallercomponents
+            \ctikzset{resistors/scale=0.8, capacitors/scale=0.8, amplifiers/scale=0.8, sources/scale=0.8, csources/scale=0.8}
+        \fi
     \fi
 
     \pgfplotsset{compat=1.17}
@@ -181,7 +248,7 @@
     % 3d plots
     \tikzset{%
         /tikz/3dplot/.style={%
-            /pgfplots/every axis/.append style={
+            /pgfplots/every axis/.append style={%
                 xlabel style={anchor=south west},
                 ylabel style={anchor=south west},
                 zlabel style={anchor=south west}
@@ -197,27 +264,10 @@
     \def\asydir{asy}  % Custom directory for asymptote files
 \fi
 
-% Remove derivative shortcuts from physics package
-\let\differential\undefined%
-\let\derivative\undefined%
-\let\partialderivative\undefined%
-\let\variation\undefined%
-\let\functionalderivative\undefined%
-\let\dd\undefined%
-\let\diffd\undefined%
-\let\dv\undefined%
-\let\pdv\undefined%
-\let\pderivative\undefined%
-\let\var\undefined%
-\let\fdv\undefined%
-\let\grad\undefined%
-\let\gradient\undefined%
-\let\absolutevalue\undefined%
-
-\usepackage[ISO]{diffcoeff}  % Derivatives; imported afterward to avoid conflicts with physics
+\usepackage[ISO]{diffcoeff}  % derivatives
 % change evaluation bar to |
-\diffdef{}{left-delim=\left ., right-delim=\right |, subscr-nudge=0mu}
-\diffdef{p}{op-symbol=\partial, left-delim=\left ., right-delim=\right |, subscr-nudge=0mu}
+\diffdef{}{left-delim=\left., right-delim=\right|, subscr-nudge=0mu}
+\diffdef{p}{op-symbol=\partial, left-delim=\left., right-delim=\right|, subscr-nudge=0mu}
 \RenewDocumentCommand\diffp{}{\diff.p.}
 
 % ----- Math Operators -----
@@ -227,6 +277,10 @@
 \DeclareMathOperator{\range}{range}  % Range (span of columns)
 \DeclareMathOperator{\Null}{N}  % Null space
 \DeclareMathOperator{\Cols}{C}  % Col space
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\rank}{rank}
+
+\DeclareMathOperator{\erf}{erf}  % Gauss error function
 \DeclareMathOperator{\corr}{corr}  % correlation
 
 \DeclareMathOperator{\from}{\colon}
@@ -247,7 +301,7 @@
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
 
-\renewcommand{\va}[1]{\vec{\bm{#1}}}  % Vector with italic bold
+\newcommand{\va}[1]{\vec{\bm{#1}}}  % Vector with italic bold
 \newcommand{\mat}[1]{\mathbf{#1}}  % Matrix variable
 \newcommand{\dd}{\dl3}
 \newcommand{\ddel}{\dl.delta.3}
@@ -259,11 +313,19 @@
 \newcommand{\rowrule}{\rule[.5ex]{1em}{0.4pt}}
 \newcommand{\colrule}{\vert}
 
-\renewcommand{\abs}[1]{\left\lvert#1\right\rvert}
-\renewcommand{\norm}[1]{\left\lVert#1\right\rVert}
-\newcommand{\vinner}[1]{\left\langle#1\right\rangle}  % Inner product
-\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
-\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\DeclarePairedDelimiter{\pairedabs}{\lvert}{\rvert}
+\newcommand{\abs}[1]{\pairedabs*{#1}}
+\DeclarePairedDelimiter{\pairednorm}{\lVert}{\rVert}
+\newcommand{\norm}[1]{\pairednorm*{#1}}
+\DeclarePairedDelimiter{\pairedvinner}{\langle}{\rangle}  % Inner product
+\newcommand{\vinner}[1]{\pairedvinner*{#1}}
+\DeclarePairedDelimiter{\pairedfloor}{\lfloor}{\rfloor}
+\newcommand{\floor}[1]{\pairedfloor*{#1}}
+\DeclarePairedDelimiter{\pairedceil}{\lceil}{\rceil}
+\newcommand{\ceil}[1]{\pairedceil*{#1}}
+
+\DeclarePairedDelimiter{\pairedeval}{.}{\rvert}  % evaluated at bar
+\newcommand{\eval}[1]{\pairedeval*{#1}}
 
 % Distributions
 \DeclareMathOperator{\Unif}{Uniform}
@@ -390,7 +452,9 @@
     \renewenvironment{proof}[1][\proofname]{%
         \ifintcbthm\tcbline*\fi
         \oldproof[#1]
-        }{\oldendproof}
+        }{
+        \oldendproof
+    }
     % cleveref definitions
     \crefname{tcb@cnt@tcbexample}{example}{examples}
     \Crefname{tcb@cnt@tcbexample}{Example}{Examples}
@@ -442,8 +506,10 @@
     \begin{adjustwidth}{1.25em}{1.25em}
         \color{blue!80!black}
         \tikzset{color=blue!80!black}
+        \setminted{bgcolor=blue!3!white}
         }{%
         \tikzset{color=black}
+        \setminted{bgcolor=lstbgcolor}
     \end{adjustwidth}
 }
 
@@ -453,6 +519,8 @@
     \setlist[enumerate, 1]{label=(\alph*)}
     \setlist[enumerate, 2]{label=(\roman*)}
 \fi
+
+% ----- Spacing -----
 
 % displaymath spacing
 \setlength{\abovedisplayskip}{5pt}
@@ -464,3 +532,21 @@
 % add table of contents as a bookmark
 \pretocmd{\tableofcontents}{\belowpdfbookmark{\contentsname}{toc}}{}{}
 
+% edit lengths for cheatsheet
+\ifopt@cheatsheetlengths
+    % change at beginning of document because they reset
+    \AtBeginDocument{%
+        \setlength{\abovedisplayskip}{2pt plus 1pt minus 2pt}
+        \setlength{\belowdisplayskip}{2pt plus 1pt minus 2pt}
+        \setlength{\abovedisplayshortskip}{0pt}
+        \setlength{\belowdisplayshortskip}{0pt}
+        \setlength{\multicolsep}{4pt plus 1pt minus 1pt}
+        \setlength{\jot}{2pt}
+        \setlength{\columnsep}{3pt}
+        \setlength{\parskip}{2pt}
+        %\setlength{\topskip}{0pt}
+    }
+
+    % lengths for enumerate lists
+    \setlist{nosep, leftmargin=10pt}
+\fi
