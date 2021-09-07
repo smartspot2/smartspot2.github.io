@@ -104,14 +104,13 @@ nav a {
     width: 150px;
     /*margin: 10px 25px 4px;*/
     margin-bottom: 4px;
-    -webkit-border-radius: 40px;
-    -moz-border-radius: 40px;
     border-radius: 40px;
 }
 
 #intro-links {
     margin: auto;
     width: fit-content;
+    width: -moz-fit-content;
 }
 
 .intro-link {
@@ -129,6 +128,7 @@ nav a {
 
 #intro-right {
     width: fit-content;
+    width: -moz-fit-content;
     margin: 0;
 }
 
@@ -202,10 +202,6 @@ div.project-card {
     margin-top: -7px;
     z-index: 1;
     opacity: 1;
-    -webkit-transition: opacity 250ms ease-in-out;
-    -moz-transition: opacity 250ms ease-in-out;
-    -ms-transition: opacity 250ms ease-in-out;
-    -o-transition: opacity 250ms ease-in-out;
     transition: opacity 250ms ease-in-out;
 }
 
