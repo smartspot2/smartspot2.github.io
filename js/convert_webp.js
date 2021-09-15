@@ -34,8 +34,11 @@ function convert_webp(element) {
   }
 }
 
-// Query for all elements with a fallback filetype
-let elements = document.querySelectorAll('*[data-fallback-filetype]');
-for (let element of elements) {
-  convert_webp(element);
+// wait until we've tried to load all resources
+window.onload = () => {
+  // Query for all elements with a fallback filetype
+  let elements = document.querySelectorAll('*[data-fallback-filetype]');
+  for (let element of elements) {
+    convert_webp(element);
+  }
 }
