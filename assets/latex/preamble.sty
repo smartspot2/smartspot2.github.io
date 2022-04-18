@@ -5,6 +5,7 @@
 % initialize options
 
 \newif\ifopt@tikz\opt@tikztrue  % default true
+\newif\ifopt@pgfexternal\opt@pgfexternalfalse
 \newif\ifopt@circuits\opt@circuitsfalse
 \newif\ifopt@enumerate\opt@enumeratefalse
 
@@ -14,14 +15,19 @@
 \newif\ifopt@cheatsheetlengths\opt@cheatsheetlengthsfalse
 \newif\ifopt@smallercomponents\opt@smallercomponentsfalse
 \newif\ifopt@narrowmargins\opt@narrowmarginsfalse
+\newif\ifopt@minipagerestore\opt@minipagerestoretrue  % default true
 
 \newif\ifopt@asymptote\opt@asymptotefalse
 \newif\ifopt@minted\opt@mintedfalse
+
+\newif\ifopt@times\opt@timesfalse
 
 \newif\ifoptgroup@homework\optgroup@homeworkfalse
 \newif\ifoptgroup@lecture\optgroup@lecturefalse
 \newif\ifoptgroup@cheatsheet\optgroup@cheatsheetfalse
 \newif\ifoptgroup@beamer\optgroup@beamerfalse
+
+\gdef\auxdir{out}
 
 % declare options
 
@@ -30,6 +36,7 @@
     \opt@circuitstrue%
 }
 \DeclareOption{circuits}{\opt@circuitstrue}
+\DeclareOption{pgfexternal}{\opt@pgfexternaltrue}
 \DeclareOption{tcbtheorems}{\opt@tcbtheoremstrue}
 
 \DeclareOption{asymptote}{\opt@asymptotetrue}
@@ -46,7 +53,11 @@
 \DeclareOption{notcbtheorems}{\opt@tcbtheoremsfalse}
 \DeclareOption{nocheatsheetlengths}{\opt@cheatsheetlengthsfalse}
 \DeclareOption{nosmallercomponents}{\opt@smallercomponentsfalse}
+\DeclareOption{nominipagerestore}{\opt@minipagerestorefalse}
+\DeclareOption{nofancysections}{\opt@fancysectionsfalse}
 \DeclareOption{noenumerate}{\opt@enumeratefalse}
+
+\DeclareOption{times}{\opt@timestrue}
 
 % option groups
 
@@ -88,6 +99,8 @@
 
 % ----- Packages -----
 
+\RequirePackage{mathdots}  % more dots in math mode; before amsmath because of warnings
+
 % AMS
 \RequirePackage{amsmath}
 \ifoptgroup@beamer
@@ -101,8 +114,23 @@
     \usefonttheme{professionalfonts}
 \fi
 \RequirePackage[T1]{fontenc}
-\RequirePackage{newtxtext}
-\RequirePackage[smallerops]{newtxmath}
+
+\ifopt@times
+    \RequirePackage{newtxtext}
+    \RequirePackage[smallerops]{newtxmath}
+\else
+    \RequirePackage{amssymb}
+    \RequirePackage{anyfontsize}
+    \RequirePackage{fourier}
+    \RequirePackage{mathrsfs}
+    \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+    % sans-serif font
+    \usepackage[semibold,scale=0.97]{sourcesanspro}
+\fi
+
+\RequirePackage[table]{xcolor}  % Colored text
+% dark green definition, as green is too bright
+\colorlet{darkgreen}{green!60!black}
 
 % Math shortcuts
 \RequirePackage{siunitx}  % formatting SI units (loaded before physics to avoid warning)
@@ -112,7 +140,8 @@
 \RequirePackage{signchart}  % sign charts
 \RequirePackage{multirow}
 \RequirePackage{thmtools}
-\RequirePackage{kbordermatrix}  % border text on matrices
+% \RequirePackage{kbordermatrix}  % border text on matrices
+\RequirePackage[short]{optidef}  % optimization problem definitions
 \RequirePackage[replace]{widebar}  % custom package for wider/better \bar{}
 
 % siunitx per symbol
@@ -127,6 +156,8 @@
 % Graphics
 \RequirePackage{graphicx}  % External graphics
 \RequirePackage[all]{xy}  % Diagrams
+\RequirePackage{caption, subcaption}  % subfigures
+\captionsetup{labelfont+=bf,format=hang}
 \ifoptgroup@beamer
     % geometry package already loaded; causes conflicts
 \else
@@ -136,9 +167,12 @@
         \RequirePackage[margin=1in, headheight=14pt]{geometry}
     \fi
 \fi
-\RequirePackage{xcolor}  % Colored text
-% dark green definition, as green is too bright
-\colorlet{darkgreen}{green!60!black}
+
+\ifoptgroup@lecture
+    % change figure counter to include section number
+    \RequirePackage{chngcntr}
+    \counterwithin{figure}{section}
+\fi
 
 
 % Headers
@@ -152,6 +186,9 @@
 
 % Formatting
 \RequirePackage{multicol}  % Multiple columns in document
+\ifopt@tcbtheorems
+    \RequirePackage[titles]{tocloft}  % custom table of contents listings; required to be before parskip
+\fi
 \RequirePackage{parskip, float}
 \RequirePackage{microtype}  % Micro-kerning
 \RequirePackage{enumitem}  % enumerate item labels
@@ -164,7 +201,7 @@
 \RequirePackage{soul}
 
 % multicols columnbreak vertical fill
-\let\oldcolumnbreak\columnbreak
+\let\oldcolumnbreak\columnbreak%
 \renewcommand\columnbreak{\vfill\null\oldcolumnbreak}
 
 % Code input formatting
@@ -184,6 +221,8 @@
     numbers=left,
     upquote=true,
     mathescape=true,
+    xleftmargin=3pt,
+    numbersep=7pt,
     % colors
     backgroundcolor=\color{lstbgcolor},
     basicstyle=\color{lstfgcolor}\footnotesize\ttfamily,
@@ -221,7 +260,7 @@
         python3,
         fontsize=\footnotesize,
         bgcolor=lstbgcolor,
-        numbersep=10pt,
+        numbersep=4pt,
         style=atomonelight,  % custom minted style; falls back to default style
     }
     \renewcommand{\theFancyVerbLine}{\ttfamily \textcolor{lstlinenumbercolor}{\arabic{FancyVerbLine}}}
@@ -243,16 +282,28 @@
     % hyperref already loaded, cleveref doesn't work with beamer
     \hypersetup{hidelinks}
 \else
-    \RequirePackage[hidelinks]{hyperref}  % Links
+    \PassOptionsToPackage{hidelinks,hypertexnames=false}{hyperref}  % allow for option overrides
+    \RequirePackage{hyperref}  % Links
+    \hypersetup{hypertexnames=false}  % avoid conflicts in hyperref names
     \RequirePackage[capitalize]{cleveref}  % better references
 \fi
 \RequirePackage{bookmark}  % hyperref extension
+\robustify{\label}  % protect the label command
 
 % Tikz, pgfplots
 \ifopt@tikz
     \RequirePackage{tikz, pgfplots}  % Drawings
     \RequirePackage{tikz-qtree}  % Easy trees in tikz
     \RequirePackage{tikz-3dplot}  % 3d views
+    \RequirePackage{pgfplotstable}  % pgfplots tables
+
+    \ifopt@pgfexternal
+        \usepgfplotslibrary{external}  % externalize to speed up
+        \tikzexternalize
+        % use job name (filename) as inner folder
+        \tikzsetexternalprefix{out/figures/\tikzexternalrealjob/}
+        %\tikzset{external/force remake}
+    \fi
 
     % Circuits
     \ifopt@circuits
@@ -269,14 +320,43 @@
         \ctikzset{voltage/american minus/.initial={$\vphantom{+}-$}}
 
         \ifopt@smallercomponents
-            \ctikzset{resistors/scale=0.8, capacitors/scale=0.8, amplifiers/scale=0.8, sources/scale=0.8, csources/scale=0.8}
+            \ctikzset{resistors/scale=0.8, capacitors/scale=0.8, amplifiers/scale=0.8, sources/scale=0.8, csources/scale=0.8, logic ports/scale=0.8}
         \fi
     \fi
 
     \pgfplotsset{compat=1.17}
 
-    \usetikzlibrary{calc,trees,positioning,arrows,fit,shapes,calc,intersections,fadings,decorations.pathmorphing,matrix}
-    \usepgfplotslibrary{fillbetween}
+    \usetikzlibrary{calc,trees,positioning,arrows,fit,shapes,calc,intersections,fadings,decorations.markings,decorations.pathmorphing,matrix}
+    \usepgfplotslibrary{fillbetween,patchplots,groupplots,statistics}
+
+    %\pgfkeys{/pgf/plot/gnuplot call={cd \auxdir && gnuplot}}  % set gnuplot directory
+    % edit contour gnuplot command, which needs special configuration
+    \ifopt@pgfexternal
+    \else% only set if not externalize
+    \pgfplotsset{
+        contour gnuplot/.style={
+            contour external={%
+                scanline marks=required,
+                script={
+                    unset surface;
+                    \ifx\thecontourlevels\empty
+                    set cntrparam levels \thecontournumber;
+                    \else
+                    set cntrparam levels discrete \thecontourlevels;
+                    \fi
+                    set contour;
+                    set table \"\outfile\";
+                    splot \"\infile\";
+                },
+                cmd={cd \auxdir && gnuplot \"\script\"},%
+                #1,%
+            },
+        },
+    }
+    \fi
+
+    % set color map limit because zathura can't handle it
+    \def\pgfplotscolormappdfmax{1} \def\pgfplotscolormappdfmax@inv{1000}
 
     % Markov chains
     \usetikzlibrary{automata}
@@ -286,7 +366,7 @@
         /tikz/markov/.style={%
             ->,  % directed edges
             every picture/.style={line width=0.75pt},
-            node distance=2.5cm,
+            node distance=30pt,
             initial text=$ $,
             every loop/.style={looseness=5},
             loop left/.append style={in=155, out=-155, looseness=5},  % change shape of loops
@@ -306,6 +386,73 @@
             /pgfplots/every axis plot/.append style={surf,shader=faceted,opacity=0.5}
         }
     }
+    % arrows on paths
+    \tikzset{
+        set arrow inside/.code={\pgfqkeys{/tikz/arrow inside}{#1}},
+        set arrow inside={end/.initial=>, opt/.initial=},
+        /pgf/decoration/Mark/.style={
+            mark/.expanded=at position #1 with {
+                \noexpand\arrow[\pgfkeysvalueof{/tikz/arrow inside/opt}]{\pgfkeysvalueof{/tikz/arrow inside/end}}
+            }
+        },
+        arrow inside/.style 2 args={
+            set arrow inside={#1},
+            postaction={
+                decorate, decoration={ markings,Mark/.list={#2} }
+            }
+        },
+    }
+
+    % box and pointer diagrams
+    \tikzset{
+        /tikz/boxandpointer/.style={
+            node distance=0pt and 0pt,
+            /tikz/element/.append style={
+                outer sep=0pt,
+                minimum size=20pt
+            }
+        }
+    }
+
+    % tikz array diagram
+    % syntax: \tikzarray[start coord]{label prefix}{elements}
+    \NewDocumentCommand{\tikzarray}{ O{0,0} m m }{%
+        \node[outer sep=0pt, inner sep=0pt] (#2-0) at (#1) {};
+        \foreach[count=\i] \x in {#3} {
+            \pgfmathsetmacro\prev{\i - 1}
+            \node[element, draw, right=0pt of #2-\prev] (#2-\i) {\x};
+        }
+    }
+    \RequirePackage{xstring}
+    \newcommand*{\commalength}[1]{%
+        \StrCount{#1,}{,}%
+    }
+    % tikz linked list diagram
+    % syntax: \tikzlinkedlist[start coord][arrow length]{label prefix}{elements}
+    \NewDocumentCommand{\tikzlinkedlist}{ s O{0,0} O{0.5} m m }{%
+        \edef\startcoord{#2}
+        \edef\arrowlength{#3}
+        \edef\labelprefix{#4}
+        % count elements in list first
+        \foreach[count=\i] \x in {#5} { \xdef\numelements{\i} }
+        \node[outer sep=0pt, inner sep=0pt] (\labelprefix-arrow-0) at (\startcoord) {};
+        \foreach[count=\i] \x in {#5} {
+            \pgfmathsetmacro\prev{\i - 1}
+            \node[anchor=west, element, draw] at (\labelprefix-arrow-\prev) (\labelprefix-\i) {\x};
+            \xdef\last{\i}
+            \IfBooleanTF{#1}{
+                % don't draw last arrow
+                \ifnum\last<\numelements\relax
+                    \draw[->] (\labelprefix-\i.east) -- ++(\arrowlength,0) node[outer sep=0pt, inner sep=0pt, minimum size=0pt] (\labelprefix-arrow-\i) {};
+                \fi
+                }{
+                \draw[->] (\labelprefix-\i.east) -- ++(\arrowlength,0) node[outer sep=0pt, inner sep=0pt, minimum size=0pt] (\labelprefix-arrow-\i) {};
+            }
+        }
+        \IfBooleanTF{#1}{}{
+            \node[anchor=west] (\labelprefix-end) at (\labelprefix-arrow-\last) {$\emptyset$};
+        }
+    }
 \fi
 
 % Asymptote
@@ -321,6 +468,9 @@
 \RenewDocumentCommand\diffp{}{\diff.p.}
 
 % ----- Math Operators -----
+
+\renewcommand{\Re}{\operatorname{Re}}  % real part
+\renewcommand{\Im}{\operatorname{Im}}  % imaginary part
 
 \DeclareMathOperator{\proj}{proj}  % Projection
 \DeclareMathOperator{\range}{range}  % Range (span of columns)
@@ -340,6 +490,10 @@
 
 \DeclareMathOperator{\sign}{sign}
 
+\DeclareMathOperator{\diam}{diam}  % diameter
+\DeclareMathOperator{\length}{length}  % length
+\DeclareMathOperator{\Residue}{Res}  % residue
+
 \DeclareMathOperator{\from}{\colon}
 \newcommand{\divides}{\mid}
 \newcommand{\notdivides}{\nmid}
@@ -353,6 +507,7 @@
 \WithSuffix\newcommand\LLSE*{\operatorname{\mathbb{L}}\mathopen{}}  % Linear least squares estimator (no qty)
 \newcommand{\Span}{\operatorname{span}\mathopen{}\opbraces{}}  % Vector/Matrix Span
 \WithSuffix\newcommand\Span*{\operatorname{span}\mathopen{}}  % Vector/Matrix Span (no qty)
+\DeclareMathOperator{\Char}{char}  % characteristic polynomial
 \DeclareMathOperator{\Var}{Var}  % Variance
 \DeclareMathOperator{\Cov}{Cov}  % Covariance
 \DeclareMathOperator{\Corr}{Corr}  % Correlation
@@ -361,11 +516,17 @@
 \DeclareMathOperator*{\argmin}{argmin}
 
 \newcommand{\va}[1]{\vec{\bm{#1}}}  % Vector with italic bold
+\ifopt@times
+    \newcommand{\vecbar}[1]{\bar{#1}}  % just use \bar if we're using times
+\else
+    \newcommand{\vecbar}[1]{\,\overline{\!#1}}  % bar to be used over a vector
+\fi
 \newcommand{\mat}[1]{\mathbf{#1}}  % Matrix variable
 \newcommand{\dd}{\dl3}
 \WithSuffix\newcommand\dd*{\dl0}  % derivative d without any prior space (to be used by itself with inline text)
 \newcommand{\ddel}{\dl.delta.3}
 \newcommand{\ddp}{\dl.p.3}
+\newcommand{\pdd}{\dl.p.3}  % alias for \ddp
 \newcommand{\definedas}{\coloneqq}
 
 % matrix row/column vector rules
@@ -399,8 +560,15 @@
 \DeclareMathOperator{\Erlang}{Erlang}
 
 % Redefine symbols
-\let\oldemptyset\emptyset
-\let\emptyset\varnothing
+\let\oldemptyset\emptyset%
+\let\emptyset\varnothing%
+
+% mapsfrom
+\ifopt@times
+    % already defined
+\else
+    \newcommand\mapsfrom{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\fi
 
 % ----- Commands -----
 
@@ -413,7 +581,7 @@
 
 \NewDocumentCommand{\grad}{e{_^}}{% gradient replacement, from egreg
     \mathop{}\!% \mathop for good spacing before \nabla
-    \nabla
+    \nabla%
     \IfValueT{#1}{_{\!#1}}% tuck in the subscript
     \IfValueT{#2}{^{#2}}% possible superscript
 }
@@ -436,7 +604,7 @@
 
 % include subfiles, with a prefix, in a range of numbers, zero-padded to the left
 \newcommand\seqsubfile[4][0]{%
-    \ifnum #1=0
+    \ifnum #1=0%
         \def\endidx{#4}
         \StrLen{\endidx}[\endidxlen]
     \else
@@ -454,6 +622,8 @@
 }
 \NewDocumentCommand{\systemeright@aligned}{m}{#1&=\\}
 
+% circled text
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 % ----- Theorems -----
 
 % define if outside of conditional
@@ -466,54 +636,92 @@
     \tcbuselibrary{breakable}
     \tcbuselibrary{skins}
 
-    \newtcbtheorem[number within=section, list inside=examplelist]{tcbexample}{Example}{%
+    % shield from externalize
+    \tcbsetforeverylayer{shield externalize}
+
+    % define lists for all of the environments
+    \newlistof[section]{tcbtheorem}{theoremlist}{Theorems}
+    \newlistof[section]{tcbexample}{examplelist}{Examples}
+    \newlistof[section]{tcbdefinition}{definitionlist}{Definitions}
+    \newlistof[section]{tcblemma}{lemmalist}{Lemmas}
+    \newlistof[section]{tcbcorollary}{corollarylist}{Corollaries}
+
+    \setlength{\cfttcbtheoremnumwidth}{23pt}
+    \setlength{\cfttcbexamplenumwidth}{23pt}
+    \setlength{\cfttcbdefinitionnumwidth}{23pt}
+    \setlength{\cfttcblemmanumwidth}{23pt}
+    \setlength{\cfttcbcorollarynumwidth}{23pt}
+
+    % theorem defined first so other counters are shared
+    \newtcbtheorem[number within=section, list inside=theoremlist, list type=tcbtheorem]{tcbtheorem}{Theorem}{%
+        enhanced, breakable,
+        colback=blue!5, colbacktitle=blue!20, coltitle=black,
+        frame hidden, parbox=false,
+        arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
+        fonttitle=\bfseries,
+        segmentation style={solid, draw=blue!20, line width=1pt},
+        label type=tcb@cnt@tcbtheorem
+    }{thm}
+    \newenvironmentx{theorem}[2][1={},2={}]{%
+        \intcbthmtrue%
+        \begin{tcbtheorem}{#1}{#2}%
+            }{
+        \end{tcbtheorem}
+        \intcbthmfalse%
+    }
+
+    \newtcbtheorem[use counter from=tcbtheorem, list inside=examplelist, list type=tcbexample]{tcbexample}{Example}{%
         colback=gray!5, colbacktitle=gray!40, coltitle=black,
         frame hidden, arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
-        fonttitle=\bfseries, breakable, enhanced, parbox=false
+        fonttitle=\bfseries, breakable, enhanced, parbox=false,
+        label type=tcb@cnt@tcbexample
     }{ex}
     \newenvironmentx{example}[2][1={},2={}]{%
         \begin{tcbexample}{#1}{#2}
             }{%
         \end{tcbexample}
     }
-    \newtcbtheorem[number within=section, list inside=definitionlist]{tcbdefinition}{Definition}{%
+    \newtcbtheorem[use counter from=tcbtheorem, list inside=definitionlist, list type=tcbdefinition]{tcbdefinition}{Definition}{%
         colback=red!5, colbacktitle=red!20, coltitle=black,
         frame hidden, arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
-        fonttitle=\bfseries, breakable, enhanced, parbox=false
+        fonttitle=\bfseries, breakable, enhanced, parbox=false,
+        label type=tcb@cnt@tcbdefinition
     }{def}
     \newenvironmentx{definition}[2][1={},2={}]{%
         \begin{tcbdefinition}{#1}{#2}
             }{%
         \end{tcbdefinition}
     }
-    \newtcbtheorem[number within=section, list inside=theoremlist]{tcbtheorem}{Theorem}{%
+    \newtcbtheorem[use counter from=tcbtheorem, list inside=lemmalist, list type=tcblemma]{tcblemma}{Lemma}{%
         enhanced, breakable,
         colback=blue!5, colbacktitle=blue!20, coltitle=black,
         frame hidden, parbox=false,
         arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
         fonttitle=\bfseries,
-        segmentation style={solid, draw=blue!20, line width=1pt}
-    }{thm}
-    \newenvironmentx{theorem}[2][1={},2={}]{%
-        \intcbthmtrue
-        \begin{tcbtheorem}{#1}{#2}%
-            }{
-        \end{tcbtheorem}
-        \intcbthmfalse%
-    }
-    \newtcbtheorem[number within=section, list inside=lemmalist]{tcblemma}{Lemma}{%
-        enhanced, breakable,
-        colback=blue!5, colbacktitle=blue!20, coltitle=black,
-        frame hidden, parbox=false,
-        arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
-        fonttitle=\bfseries,
-        segmentation style={solid, draw=blue!20, line width=1pt}
+        segmentation style={solid, draw=blue!20, line width=1pt},
+        label type=tcb@cnt@tcblemma
     }{lem}
     \newenvironmentx{lemma}[2][1={},2={}]{%
         \intcbthmtrue%
         \begin{tcblemma}{#1}{#2}
             }{%
         \end{tcblemma}
+        \intcbthmfalse%
+    }
+    \newtcbtheorem[use counter from=tcbtheorem, list inside=corollarylist, list type=tcbcorollary]{tcbcorollary}{Corollary}{%
+        enhanced, breakable,
+        colback=blue!5, colbacktitle=blue!20, coltitle=black,
+        frame hidden, parbox=false,
+        arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
+        fonttitle=\bfseries,
+        segmentation style={solid, draw=blue!20, line width=1pt},
+        label type=tcb@cnt@tcbcorollary
+    }{cor}
+    \newenvironmentx{corollary}[2][1={},2={}]{%
+        \intcbthmtrue%
+        \begin{tcbcorollary}{#1}{#2}
+            }{%
+        \end{tcbcorollary}
         \intcbthmfalse%
     }
     % redefine proof environment
@@ -523,7 +731,7 @@
         \ifintcbthm\tcbline*\fi
         \oldproof[#1]
         }{
-        \oldendproof
+        \oldendproof%
     }
     % cleveref definitions
     % \crefname{tcb@cnt@tcbexample}{example}{examples}
@@ -534,6 +742,8 @@
     \Crefname{tcb@cnt@tcbtheorem}{Theorem}{Theorems}
     % \crefname{tcb@cnt@tcblemma}{lemma}{lemmas}
     \Crefname{tcb@cnt@tcblemma}{Lemma}{Lemmas}
+    % \crefname{tcb@cnt@tcbcorollary}{corollary}{corollaries}
+    \Crefname{tcb@cnt@tcbcorollary}{Corollary}{Corollaries}
 \else
     \ifoptgroup@beamer
         % beamer overrides theorem environments
@@ -562,7 +772,8 @@
     \titlecontents{lecturesection}[1.5em]{\addvspace{1em}\bfseries}{\contentslabel{1.5em}}{}{\hfill\contentspage}
     \titlespacing*{\lecturesection}{0pt}{2\baselineskip}{1\baselineskip}
 
-    \newcommand\lecture[2][]{\ifthenelse{\equal{#1}{}}{\sectiondate{}}{\sectiondate{#1}}
+    \newcommand\lecture[2][]{\ifthenelse{\equal{#1}{}}{\sectiondate{}}{\sectiondate{#1}
+        \ifopt@pgfexternal\tikzsetfigurename{lec\thesection-}\fi}
     \sectiondesc{#2}\lecturesection[#2]{Lecture \thesection}}
 
     \titleformat{\lecturesection}[frame]
@@ -630,6 +841,16 @@
     \setlist{nosep, leftmargin=10pt}
 \fi
 
+% restore minipage lengths
+\ifopt@minipagerestore
+    \newcommand{\@minipagerestore}{
+        \setlength{\parskip}{\medskipamount}
+    }
+\fi
+
 \ifoptgroup@beamer
     \pdfstringdefDisableCommands{\def\translate#1{#1}}  % \translate causes warning
 \fi
+
+% set higher matrix column limit
+\setcounter{MaxMatrixCols}{30}

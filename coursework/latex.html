@@ -173,6 +173,9 @@
                   Initializes <code>enumerate</code> environments for homework typesetting,
                   and includes all packages for diagram creation (TikZ, PGFPlots, and CircuiTikZ).
                 </p>
+                <p>
+                  If necessary, one can use the <code>noenumerate</code> flag to revert the enumerate changes.
+                </p>
               </li>
               <li>
                 <p><code>lecture</code></p>
@@ -187,18 +190,19 @@
                 <p>
                   The <code>\lecture[<i>date</i>]{<i>title</i>}</code> command
                   is added to start lectures, and the <code>example</code>, <code>definition</code>,
-                  <code>theorem</code>,
-                  and <code>lemma</code> environments are added as well, using colored boxes.
+                  <code>theorem</code>, <code>lemma</code>
+                  and <code>corollary</code> environments are added as well, using colored boxes.
                   All of these environments have optional arguments
                   <code>\begin{<i>environment</i>}[<i>title</i>][<i>label</i>]</code>.
                   Labels can be referenced by prefixing <code>ex:</code>, <code>def:</code>, <code>thm:</code>,
-                  or <code>lem:</code> respectively to the <code><i>label</i></code> specified in the environment.
+                  <code>lem:</code> or <code>cor:</code>
+                  respectively to the <code><i>label</i></code> specified in the environment.
                 </p>
                 <p>
                   Lists of theorems, definitions, etc. can be typeset with
-                  <code>\tcblistof[\section*]{<i>list name</i>}{<i>section title</i>}</code>.
-                  All list names are the environment names, with the suffix <code>list</code>;
-                  for example, theorems are in the list <code>theoremlist</code>.
+                  <code>\listof<i>listname</i>}</code>.
+                  All list names are the environment names, with the prefix <code>tcb</code>;
+                  for example, to get a list of theorems, you would write <code>\listoftcbtheorem</code>.
                 </p>
                 <p>
                   This is usually the group that includes the most packages and commands.
@@ -219,6 +223,15 @@
                   See the cheatsheets linked on the <a href="index.html">coursework page</a> for reference.
                 </p>
               </li>
+              <li>
+                <p><code>beamer</code></p>
+                <p><b>Enables:</b> <code>tikz</code>, <code>circuits</code></p>
+              </li>
+              <p>
+                Changes package settings to be compatible with the <code>beamer</code> document class.
+                I don't use beamer too much at all, so I may update the preamble at some point
+                breaking this flag.
+              </p>
             </ul>
             <h5>Options</h5>
             <ul>
@@ -266,7 +279,7 @@
                 </p>
               </li>
               <li>
-                <p><code>fancysections</code></p>
+                <p><code>fancysections</code>, <code>nofancysections</code></p>
                 <p><b>Default:</b> disabled</p>
                 <p>
                   Defines the <code>\lecture[<i>date</i>]{<i>title</i>}</code> command for fancier lecture headers.
@@ -296,6 +309,25 @@
                 </p>
               </li>
               <li>
+                <p><code>pgfexternal</code></p>
+                <p><b>Default:</b> disabled</p>
+                <p>Externalizes all TikZ figures.</p>
+                <p>
+                  TikZ ships with the <code>external</code> library, which saves all TikZ diagrams
+                  as their own separate files in an auxiliary directory,
+                  so that they can be loaded in a lot quicker in continuous compilation.
+                  This flag enables this package, while also setting some internal options
+                  to ensure that all auxiliary files are put in the correct directory.
+                </p>
+                <p>
+                  Internally, there is a hard-coded <code>\auxdir</code> value,
+                  set to <code>out</code>; this should be the outer directory in which
+                  all external figures are stored.
+                  Figures are stored in an inner directory, named by the original
+                  <code>.tex</code> file.
+                </p>
+              </li>
+              <li>
                 <p><code>asymptote</code></p>
                 <p><b>Default:</b> disabled</p>
                 <p>
@@ -309,6 +341,39 @@
                   and I've spent countless hours trying to make sense of the options.
                   Since then, I've fully switched over to using TikZ for diagram creation.
                 </p>
+              </li>
+              <li>
+                <p><code>nominipagerestore</code></p>
+                <p><b>Default:</b> enabled</p>
+                <p>Restores the <code>\parskip</code> length in <code>minipage</code> environments.</p>
+                <p>
+                  By default, <code>minipage</code> environments resets the <code>\parskip</code>
+                  length to zero, which can cause some uneven formatting.
+                  This setting restores the <code>\parskip</code> value inside <code>minipage</code>
+                  environments, and is enabled by default.
+                </p>
+                <p>
+                  There shouldn't really be a reason why you'd disable this,
+                  unless you prefer the modified <code>\parskip</code> value.
+                </p>
+              </li>
+              <li>
+                <p><code>times</code></p>
+                <p><b>Default:</b> disabled</p>
+                <p>Overrides the font settings to use Times New Roman fonts.</p>
+                <p>
+                  The default font I use in my <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>
+                  documents is <a href="https://fonts.adobe.com/fonts/utopia">Utopia font</a> from Adobe,
+                  through the <a href="https://ctan.org/tex-archive/fonts/utopia">Utopia package</a>.
+                </p>
+                <p>
+                  However, some people may prefer Times New Roman (which is the font I've used prior
+                  to switching over to Utopia), and this setting allows for a clean and seamless switch.
+                </p>
+                <p>
+                  There are a few internal changes regarding certain symbols and commands
+                  that are present in one font and not the other; a fair warning that
+                  these differences are not all covered, as I don't typically use this setting anymore.
               </li>
             </ul>
           </div>
