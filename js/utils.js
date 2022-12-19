@@ -20,11 +20,11 @@ for (let div of freezeframes) {
 
 let emailLink = document.getElementById('intro-email-link');
 let emaillinkTooltip = new bootstrap.Tooltip(emailLink,
-    {
-      'trigger': 'manual',
-      'placement': 'bottom',
-      'title': 'Copied to clipboard!'
-    }
+  {
+    'trigger': 'manual',
+    'placement': 'bottom',
+    'title': 'Copied to clipboard!'
+  }
 );
 emailLink.addEventListener('click', () => {
   // Yeah no you're not gonna get the email that easily from web scraping.

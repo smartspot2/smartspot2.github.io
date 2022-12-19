@@ -1,391 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
-  <title>LaTeX</title>
-  <link href="../favicon.ico" rel="icon"/>
+  <head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>LaTeX</title>
+    <link href="../favicon.ico" rel="icon"/>
 
-  <!--  Bootstrap  -->
-  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
-  <script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!--  Bootstrap  -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!--  Styles  -->
-  <link href="../css/styles.css" rel="stylesheet"/>
+    <!--  Styles  -->
+    <link href="../css/styles.css" rel="stylesheet"/>
 
-  <!--  Fonts  -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <!--  Fonts  -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
-  <!--  Feature detection  -->
-  <script src="../js/modernizr.js"></script>
-  <!--  Handle fallback with browsers that don't support webp  -->
-  <script src="../js/convert_webp.js"></script>
-</head>
+      <!--  Feature detection  -->
+    <script src="../js/modernizr.js"></script>
+    <!--  Handle fallback with browsers that don't support webp  -->
+    <script src="../js/convert_webp.js"></script>
+  </head>
 
-<body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
-  <div class="container-sm container-scale">
-    <a class="navbar-brand" href="..">
-      <img class="nav-icon" alt="Phi" data-fallback-filetype="png"
-           draggable="false" src="../assets/img/Phi-icon.webp"/>
-      <span class="nav-text">Alec Li</span>
-    </a>
-    <button class="navbar-toggler" aria-controls="navbar-right" aria-expanded="false" aria-label="Toggle navigation"
-            data-bs-target="#navbar-right" data-bs-toggle="collapse" type="button">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="navbar-right" class="collapse navbar-collapse ms-auto">
-      <ul class="navbar-nav ms-auto mb-0 mb-sm-2">
-        <li class="nav-item">
-          <a class="nav-link" href="..">Home</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" aria-expanded="false" href="../coursework" role="button">
-            Coursework
-          </a>
-          <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item active">LaTeX</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../teaching">Teaching</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<main class="container-sm container-scale">
-  <h2>LaTeX</h2>
-
-  <p>
-    I typeset all of my notes and homework in <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>,
-    using Vim as my text editor, with the
-    <a href="https://github.com/lervag/vimtex">VimTeX</a>
-    plugin for Vim+<span class="latex">L<sup>a</sup>T<sub>e</sub>X</span> incorporation,
-    and the <a href="https://github.com/SirVer/ultisnips">Ultisnips</a> plugin
-    for fast snippets while typesetting.
-    All my diagrams are typeset with the TikZ and PGFPlots packages manually.
-  </p>
-  <p>
-    Inspiration to move over to Vim for <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>
-    documents came from <a href="https://castel.dev/post/lecture-notes-1/">Gilles Castel's amazing blog post</a>
-    about his workflow.
-    Most of my initial snippets were taken directly from this post, and I built up many others over time.
-  </p>
-  <!-- not actually doing this anymore because Windows sucks at customizing hotkeys and shortcuts :(
-  I'm also currently in the process of incorporating <a href="https://inkscape.org/">Inkscape</a>
-  into my typesetting process to more easily typeset diagrams.
-  Before now, I've always manually typeset diagrams using the TikZ and PGFPlots packages.
-  -->
-  <br>
-  <h4>Tips</h4>
-  <p>
-    <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span> can be hard to get used to,
-    and has a decent learning curve. My largest tip is just to <b>keep
-    practicing</b>—you'll only get better by continuously typesetting documents.
-    I've only just gotten to the point where I can typeset live during lectures,
-    and I've spent the past 2 years getting used to <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>
-    and finding my own workflow.
-  </p>
-  <p>
-    Another huge tip is to <b>Google everything</b> you get stuck on as you typeset—eventually,
-    you'll find yourself remembering more and more commands and environments,
-    slowly getting over that learning curve.
-  </p>
-  <p>
-    Typesetting is very time consuming as you're starting out—<b>be patient</b>!
-    You'll slowly build up speed and familiarity as you go, so don't immediately give up
-    if you find that typesetting homeworks takes twice as long
-    as writing everything by hand (or longer).
-  </p>
-  <p>
-
-  </p>
-  <hr>
-  <h4>Custom Preamble</h4>
-  <p>
-    <a href="../assets/latex/preamble.sty">Here</a> is a link to my current <code>preamble.sty</code> file,
-    and <a href="../assets/latex/physics-minimal.sty">here</a> is a link to a minimal version of the
-    <code>physics</code> package that I compiled from the package sources, containing only the <code>\qty</code>
-    command and the modified math commands.
-    My preamble is always evolving as I typeset more, and I will periodically update the version on this page.
-  </p>
-  <p>
-    <b>Note:</b> it is not the best idea to use my preamble as-is, if you are looking for a long-term solution;
-    you'll likely have no idea which packages are included and how to use any
-    of the commands/environments I've defined.
-  </p>
-  <p>
-    I suggest using my preamble as inspiration for what to include in your preamble,
-    or how to structure your custom preamble—this way, you'll know exactly what you're doing,
-    and you'd have full control over what packages to add to suit <i>your</i> needs.
-  </p>
-  <p>
-    I provide my preamble and full documentation in hopes that I can help others
-    in the process of learning <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>,
-    and ease their transition into typesetting.
-    The purpose of sharing my preamble is to give a supplement for learning,
-    <i>not</i> as a drop-in default preamble.
-    Thus, I highly suggest you read through the source code yourself and adapt it to your needs,
-    referencing the below documentation if necessary to clarify any details.
-  </p>
-  <br>
-  <h5>Usage</h5>
-  <p>
-    You may include this preamble within your documents with <code>\usepackage[<i>flags</i>]{preamble}</code>.
-    To make the <code>preamble.sty</code> file available globally, put the file in
-    <code>~/texmf/tex/latex/</code>
-    (you may have to update your settings in your local <span class="tex">T<sub>e</sub>X</span> distribution);
-    I have it as <code>~/texmf/tex/latex/styles/preamble.sty</code>.
-  </p>
-  <p>
-    Here are the possible options that you can use with my preamble; you can include multiple,
-    but flags specified later will override the previously specified flags.
-    You can include the flags as <code>\usepackage[flag1,flag2]{preamble}</code>;
-    here, <code>flag2</code> will override <code>flag1</code>.
-  </p>
-  <br>
-  <div class="accordion">
-    <div class="accordion-item">
-      <div id="preamble-documentation-header" class="accordion-header">
-        <button class="accordion-button collapsed" aria-controls="preamble-documentation"
-                aria-expanded="false" data-bs-target="#preamble-documentation"
-                data-bs-toggle="collapse" type="button">
-          <h5>Documentation</h5>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+      <div class="container-sm container-scale">
+        <a class="navbar-brand" href="..">
+          <img class="nav-icon" alt="Phi" data-fallback-filetype="png"
+            draggable="false" src="../assets/img/Phi-icon.webp"/>
+          <span class="nav-text">Alec Li</span>
+        </a>
+        <button class="navbar-toggler" aria-controls="navbar-right" aria-expanded="false" aria-label="Toggle navigation"
+          data-bs-target="#navbar-right" data-bs-toggle="collapse" type="button">
+          <span class="navbar-toggler-icon"></span>
         </button>
+        <div id="navbar-right" class="collapse navbar-collapse ms-auto">
+          <ul class="navbar-nav ms-auto mb-0 mb-sm-2">
+            <li class="nav-item">
+              <a class="nav-link" href="..">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" aria-expanded="false" href="../coursework" role="button">
+                Coursework
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item active">LaTeX</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../teaching">Teaching</a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div id="preamble-documentation" class="accordion-collapse collapse"
-           aria-labelledby="preamble-documentation-header" data-bs-parent="#preamble-documentation-header">
-        <div class="accordion-body">
-          <div id="preamble-flags">
-            <h5>Groups</h5>
-            <ul>
-              <li>
-                <p><code>homework</code></p>
-                <p><b>Enables:</b>
-                  <code>tikz</code>, <code>circuits</code>, <code>enumerate</code>
-                </p>
-                <p>
-                  Initializes <code>enumerate</code> environments for homework typesetting,
-                  and includes all packages for diagram creation (TikZ, PGFPlots, and CircuiTikZ).
-                </p>
-                <p>
-                  If necessary, one can use the <code>noenumerate</code> flag to revert the enumerate changes.
-                </p>
-              </li>
-              <li>
-                <p><code>lecture</code></p>
+    </nav>
 
-                <p><b>Enables:</b>
-                  <code>tikz</code>, <code>circuits</code>, <code>tcbtheorems</code>, <code>fancysections</code>
-                </p>
-                <p>
-                  Initializes commands and theorem environments for typesetting lecture notes,
-                  and also includes all packages for diagram creation.
-                </p>
-                <p>
-                  The <code>\lecture[<i>date</i>]{<i>title</i>}</code> command
-                  is added to start lectures, and the <code>example</code>, <code>definition</code>,
-                  <code>theorem</code>, <code>lemma</code>
-                  and <code>corollary</code> environments are added as well, using colored boxes.
-                  All of these environments have optional arguments
-                  <code>\begin{<i>environment</i>}[<i>title</i>][<i>label</i>]</code>.
-                  Labels can be referenced by prefixing <code>ex:</code>, <code>def:</code>, <code>thm:</code>,
-                  <code>lem:</code> or <code>cor:</code>
-                  respectively to the <code><i>label</i></code> specified in the environment.
-                </p>
-                <p>
-                  Lists of theorems, definitions, etc. can be typeset with
-                  <code>\listof<i>listname</i>}</code>.
-                  All list names are the environment names, with the prefix <code>tcb</code>;
-                  for example, to get a list of theorems, you would write <code>\listoftcbtheorem</code>.
-                </p>
-                <p>
-                  This is usually the group that includes the most packages and commands.
-                </p>
-              </li>
-              <li>
-                <p><code>cheatsheet</code></p>
-                <p><b>Enables:</b>
-                  <code>tikz</code>, <code>circuits</code>, <code>narrowmargins</code>, <code>cheatsheetlengths</code>,
-                  <code>smallercomponents</code>
-                </p>
-                <p>
-                  Initializes page margins (narrower margins) and spacing for cheatsheet creation.
-                  Also includes all packages for diagram creation.
-                </p>
-                <p>
-                  Best used with the <code>multicols</code> environment to include two columns in the cheatsheet.
-                  See the cheatsheets linked on the <a href="index.html">coursework page</a> for reference.
-                </p>
-              </li>
-              <li>
-                <p><code>beamer</code></p>
-                <p><b>Enables:</b> <code>tikz</code>, <code>circuits</code></p>
-              </li>
-              <p>
-                Changes package settings to be compatible with the <code>beamer</code> document class.
-                I don't use beamer too much at all, so I may update the preamble at some point
-                breaking this flag.
-              </p>
-            </ul>
-            <h5>Options</h5>
-            <ul>
-              <li>
-                <p><code>tikz</code>, <code>notikz</code></p>
-                <p><b>Default:</b> enabled</p>
-                <p>
-                  Includes or excludes the TikZ and PGFPlots packages, respectively.
-                </p>
-                <p>
-                  If set, the CircuiTikZ package will automatically be loaded,
-                  and the <code>circuits</code> flag will do nothing.
-                </p>
-                <p>
-                  If unset, the CircuiTikZ package will never be loaded,
-                  even if the <code>circuits</code> flag is set.
-                </p>
-              </li>
-              <li>
-                <p><code>circuits</code>, <code>nocircuits</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>Includes or excludes the CircuiTikZ package, respectively.</p>
-                <p>
-                  The latter is most commonly used in <code>[tikz,nocircuits]</code> to include TikZ but exclude
-                  CircuiTikZ.
-                </p>
-              </li>
-              <li>
-                <p><code>tcbtheorems</code>, <code>notcbtheorems</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>
-                  Initializes theorem environments with the <code>tcolorbox</code> package,
-                  making them fancier than the default environments.
-                </p>
-                <p>
-                  Most commonly excluded if there is no need to define any theorems in lecture notes;
-                  in this case, <code>[lecture,notcbtheorems]</code> would be used.
-                </p>
-              </li>
-              <li>
-                <p><code>narrowmargins</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>
-                  Makes the margins smaller (0.6 inches instead of the default 1 inch).
-                </p>
-              </li>
-              <li>
-                <p><code>fancysections</code>, <code>nofancysections</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>
-                  Defines the <code>\lecture[<i>date</i>]{<i>title</i>}</code> command for fancier lecture headers.
-                </p>
-              </li>
-              <li>
-                <p><code>smallercomponents</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>Decreases the size of CircuiTikZ components to 80%.</p>
-              </li>
-              <li>
-                <p><code>minted</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>Includes the minted package.</p>
-                <p>
-                  Provides syntax highlighting for code listings.
-                  Requires the <a href="https://pygments.org">Pygments package</a>
-                  to be installed in the system Python interpreter.
-                </p>
-                <p>
-                  The Pygments style used is <a href="../assets/latex/atomonelight.py">my custom port</a>
-                  of the Atom One Light color scheme,
-                  and will fallback to the default Pygments style if not installed.
-                  Additionally, in homework answer environments, the background color of minted
-                  code blocks is changed to a light blue to differentiate between
-                  answer code blocks and problem statement code blocks.
-                </p>
-              </li>
-              <li>
-                <p><code>pgfexternal</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>Externalizes all TikZ figures.</p>
-                <p>
-                  TikZ ships with the <code>external</code> library, which saves all TikZ diagrams
-                  as their own separate files in an auxiliary directory,
-                  so that they can be loaded in a lot quicker in continuous compilation.
-                  This flag enables this package, while also setting some internal options
-                  to ensure that all auxiliary files are put in the correct directory.
-                </p>
-                <p>
-                  Internally, there is a hard-coded <code>\auxdir</code> value,
-                  set to <code>out</code>; this should be the outer directory in which
-                  all external figures are stored.
-                  Figures are stored in an inner directory, named by the original
-                  <code>.tex</code> file.
-                </p>
-              </li>
-              <li>
-                <p><code>asymptote</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>
-                  Includes the <code>asymptote</code> package.
-                  This is not included by default with any of the groups,
-                  and requires the external <a href="https://asymptote.sourceforge.io/">asymptote program</a> to be
-                  installed.
-                </p>
-                <p>
-                  A fair warning that the Asymptote documentation is quite bad,
-                  and I've spent countless hours trying to make sense of the options.
-                  Since then, I've fully switched over to using TikZ for diagram creation.
-                </p>
-              </li>
-              <li>
-                <p><code>nominipagerestore</code></p>
-                <p><b>Default:</b> enabled</p>
-                <p>Restores the <code>\parskip</code> length in <code>minipage</code> environments.</p>
-                <p>
-                  By default, <code>minipage</code> environments resets the <code>\parskip</code>
-                  length to zero, which can cause some uneven formatting.
-                  This setting restores the <code>\parskip</code> value inside <code>minipage</code>
-                  environments, and is enabled by default.
-                </p>
-                <p>
-                  There shouldn't really be a reason why you'd disable this,
-                  unless you prefer the modified <code>\parskip</code> value.
-                </p>
-              </li>
-              <li>
-                <p><code>times</code></p>
-                <p><b>Default:</b> disabled</p>
-                <p>Overrides the font settings to use Times New Roman fonts.</p>
-                <p>
-                  The default font I use in my <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>
-                  documents is <a href="https://fonts.adobe.com/fonts/utopia">Utopia font</a> from Adobe,
-                  through the <a href="https://ctan.org/tex-archive/fonts/utopia">Utopia package</a>.
-                </p>
-                <p>
-                  However, some people may prefer Times New Roman (which is the font I've used prior
-                  to switching over to Utopia), and this setting allows for a clean and seamless switch.
-                </p>
-                <p>
-                  There are a few internal changes regarding certain symbols and commands
-                  that are present in one font and not the other; a fair warning that
-                  these differences are not all covered, as I don't typically use this setting anymore.
-              </li>
-            </ul>
+    <main class="container-sm container-scale">
+      <h2>LaTeX</h2>
+
+      <p>
+        I typeset all of my notes and homework in <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>,
+        using Vim as my text editor, with the
+        <a href="https://github.com/lervag/vimtex">VimTeX</a>
+        plugin for Vim+<span class="latex">L<sup>a</sup>T<sub>e</sub>X</span> incorporation,
+        and the <a href="https://github.com/SirVer/ultisnips">Ultisnips</a> plugin
+        for fast snippets while typesetting.
+        All my diagrams are typeset with the TikZ and PGFPlots packages manually.
+      </p>
+      <p>
+        Inspiration to move over to Vim for <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>
+        documents came from <a href="https://castel.dev/post/lecture-notes-1/">Gilles Castel's amazing blog post</a>
+        about his workflow.
+        Most of my initial snippets were taken directly from this post, and I built up many others over time.
+      </p>
+      <!-- not actually doing this anymore because Windows sucks at customizing hotkeys and shortcuts :(
+I'm also currently in the process of incorporating <a href="https://inkscape.org/">Inkscape</a>
+into my typesetting process to more easily typeset diagrams.
+Before now, I've always manually typeset diagrams using the TikZ and PGFPlots packages.
+-->
+      <br>
+      <h4>Tips</h4>
+      <p>
+        <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span> can be hard to get used to,
+        and has a decent learning curve. My largest tip is just to <b>keep
+          practicing</b>—you'll only get better by continuously typesetting documents.
+        I've only just gotten to the point where I can typeset live during lectures,
+        and I've spent the past 2 years getting used to <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>
+        and finding my own workflow.
+      </p>
+      <p>
+        Another huge tip is to <b>Google everything</b> you get stuck on as you typeset—eventually,
+        you'll find yourself remembering more and more commands and environments,
+        slowly getting over that learning curve.
+      </p>
+      <p>
+        Typesetting is very time consuming as you're starting out—<b>be patient</b>!
+        You'll slowly build up speed and familiarity as you go, so don't immediately give up
+        if you find that typesetting homeworks takes twice as long
+        as writing everything by hand (or longer).
+      </p>
+      <p>
+
+      </p>
+      <hr>
+      <h4>Custom Preamble</h4>
+      <p>
+        <a href="../assets/latex/preamble.sty">Here</a> is a link to my current <code>preamble.sty</code> file,
+        and <a href="../assets/latex/physics-minimal.sty">here</a> is a link to a minimal version of the
+        <code>physics</code> package that I compiled from the package sources, containing only the <code>\qty</code>
+        command and the modified math commands.
+        My preamble is always evolving as I typeset more, and I will periodically update the version on this page.
+      </p>
+      <p>
+        <b>Note:</b> it is not the best idea to use my preamble as-is, if you are looking for a long-term solution;
+        you'll likely have no idea which packages are included and how to use any
+        of the commands/environments I've defined.
+      </p>
+      <p>
+        I suggest using my preamble as inspiration for what to include in your preamble,
+        or how to structure your custom preamble—this way, you'll know exactly what you're doing,
+        and you'd have full control over what packages to add to suit <i>your</i> needs.
+      </p>
+      <p>
+        I provide my preamble and full documentation in hopes that I can help others
+        in the process of learning <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>,
+        and ease their transition into typesetting.
+        The purpose of sharing my preamble is to give a supplement for learning,
+        <i>not</i> as a drop-in default preamble.
+        Thus, I highly suggest you read through the source code yourself and adapt it to your needs,
+        referencing the below documentation if necessary to clarify any details.
+      </p>
+      <br>
+      <h5>Usage</h5>
+      <p>
+        You may include this preamble within your documents with <code>\usepackage[<i>flags</i>]{preamble}</code>.
+        To make the <code>preamble.sty</code> file available globally, put the file in
+        <code>~/texmf/tex/latex/</code>
+        (you may have to update your settings in your local <span class="tex">T<sub>e</sub>X</span> distribution);
+        I have it as <code>~/texmf/tex/latex/styles/preamble.sty</code>.
+      </p>
+      <p>
+        Here are the possible options that you can use with my preamble; you can include multiple,
+        but flags specified later will override the previously specified flags.
+        You can include the flags as <code>\usepackage[flag1,flag2]{preamble}</code>;
+        here, <code>flag2</code> will override <code>flag1</code>.
+      </p>
+      <br>
+      <div class="accordion">
+        <div class="accordion-item">
+          <div id="preamble-documentation-header" class="accordion-header">
+            <button class="accordion-button collapsed" aria-controls="preamble-documentation"
+              aria-expanded="false" data-bs-target="#preamble-documentation"
+              data-bs-toggle="collapse" type="button">
+              <h5>Documentation</h5>
+            </button>
+          </div>
+          <div id="preamble-documentation" class="accordion-collapse collapse"
+            aria-labelledby="preamble-documentation-header" data-bs-parent="#preamble-documentation-header">
+            <div class="accordion-body">
+              <div id="preamble-flags">
+                <h5>Groups</h5>
+                <ul>
+                  <li>
+                    <p><code>homework</code></p>
+                    <p><b>Enables:</b>
+                      <code>tikz</code>, <code>circuits</code>, <code>enumerate</code>
+                    </p>
+                    <p>
+                      Initializes <code>enumerate</code> environments for homework typesetting,
+                      and includes all packages for diagram creation (TikZ, PGFPlots, and CircuiTikZ).
+                    </p>
+                    <p>
+                      If necessary, one can use the <code>noenumerate</code> flag to revert the enumerate changes.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>lecture</code></p>
+
+                    <p><b>Enables:</b>
+                      <code>tikz</code>, <code>circuits</code>, <code>tcbtheorems</code>, <code>fancysections</code>
+                    </p>
+                    <p>
+                      Initializes commands and theorem environments for typesetting lecture notes,
+                      and also includes all packages for diagram creation.
+                    </p>
+                    <p>
+                      The <code>\lecture[<i>date</i>]{<i>title</i>}</code> command
+                      is added to start lectures, and the <code>example</code>, <code>definition</code>,
+                      <code>theorem</code>, <code>lemma</code>
+                      and <code>corollary</code> environments are added as well, using colored boxes.
+                      All of these environments have optional arguments
+                      <code>\begin{<i>environment</i>}[<i>title</i>][<i>label</i>]</code>.
+                      Labels can be referenced by prefixing <code>ex:</code>, <code>def:</code>, <code>thm:</code>,
+                      <code>lem:</code> or <code>cor:</code>
+                      respectively to the <code><i>label</i></code> specified in the environment.
+                    </p>
+                    <p>
+                      Lists of theorems, definitions, etc. can be typeset with
+                      <code>\listof<i>listname</i>}</code>.
+                      All list names are the environment names, with the prefix <code>tcb</code>;
+                      for example, to get a list of theorems, you would write <code>\listoftcbtheorem</code>.
+                    </p>
+                    <p>
+                      This is usually the group that includes the most packages and commands.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>cheatsheet</code></p>
+                    <p><b>Enables:</b>
+                      <code>tikz</code>, <code>circuits</code>, <code>narrowmargins</code>, <code>cheatsheetlengths</code>,
+                      <code>smallercomponents</code>
+                    </p>
+                    <p>
+                      Initializes page margins (narrower margins) and spacing for cheatsheet creation.
+                      Also includes all packages for diagram creation.
+                    </p>
+                    <p>
+                      Best used with the <code>multicols</code> environment to include two columns in the cheatsheet.
+                      See the cheatsheets linked on the <a href="index.html">coursework page</a> for reference.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>beamer</code></p>
+                    <p><b>Enables:</b> <code>tikz</code>, <code>circuits</code></p>
+                  </li>
+                  <p>
+                    Changes package settings to be compatible with the <code>beamer</code> document class.
+                    I don't use beamer too much at all, so I may update the preamble at some point
+                    breaking this flag.
+                  </p>
+                </ul>
+                <h5>Options</h5>
+                <ul>
+                  <li>
+                    <p><code>tikz</code>, <code>notikz</code></p>
+                    <p><b>Default:</b> enabled</p>
+                    <p>
+                      Includes or excludes the TikZ and PGFPlots packages, respectively.
+                    </p>
+                    <p>
+                      If set, the CircuiTikZ package will automatically be loaded,
+                      and the <code>circuits</code> flag will do nothing.
+                    </p>
+                    <p>
+                      If unset, the CircuiTikZ package will never be loaded,
+                      even if the <code>circuits</code> flag is set.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>circuits</code>, <code>nocircuits</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Includes or excludes the CircuiTikZ package, respectively.</p>
+                    <p>
+                      The latter is most commonly used in <code>[tikz,nocircuits]</code> to include TikZ but exclude
+                      CircuiTikZ.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>tcbtheorems</code>, <code>notcbtheorems</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>
+                      Initializes theorem environments with the <code>tcolorbox</code> package,
+                      making them fancier than the default environments.
+                    </p>
+                    <p>
+                      Most commonly excluded if there is no need to define any theorems in lecture notes;
+                      in this case, <code>[lecture,notcbtheorems]</code> would be used.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>narrowmargins</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>
+                      Makes the margins smaller (0.6 inches instead of the default 1 inch).
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>fancysections</code>, <code>nofancysections</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>
+                      Defines the <code>\lecture[<i>date</i>]{<i>title</i>}</code> command for fancier lecture headers.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>smallercomponents</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Decreases the size of CircuiTikZ components to 80%.</p>
+                  </li>
+                  <li>
+                    <p><code>minted</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Includes the minted package.</p>
+                    <p>
+                      Provides syntax highlighting for code listings.
+                      Requires the <a href="https://pygments.org">Pygments package</a>
+                      to be installed in the system Python interpreter.
+                    </p>
+                    <p>
+                      The Pygments style used is <a href="../assets/latex/atomonelight.py">my custom port</a>
+                      of the Atom One Light color scheme,
+                      and will fallback to the default Pygments style if not installed.
+                      Additionally, in homework answer environments, the background color of minted
+                      code blocks is changed to a light blue to differentiate between
+                      answer code blocks and problem statement code blocks.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>pgfexternal</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Externalizes all TikZ figures.</p>
+                    <p>
+                      TikZ ships with the <code>external</code> library, which saves all TikZ diagrams
+                      as their own separate files in an auxiliary directory,
+                      so that they can be loaded in a lot quicker in continuous compilation.
+                      This flag enables this package, while also setting some internal options
+                      to ensure that all auxiliary files are put in the correct directory.
+                    </p>
+                    <p>
+                      Internally, there is a hard-coded <code>\auxdir</code> value,
+                      set to <code>out</code>; this should be the outer directory in which
+                      all external figures are stored.
+                      Figures are stored in an inner directory, named by the original
+                      <code>.tex</code> file.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>asymptote</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>
+                      Includes the <code>asymptote</code> package.
+                      This is not included by default with any of the groups,
+                      and requires the external <a href="https://asymptote.sourceforge.io/">asymptote program</a> to be
+                      installed.
+                    </p>
+                    <p>
+                      A fair warning that the Asymptote documentation is quite bad,
+                      and I've spent countless hours trying to make sense of the options.
+                      Since then, I've fully switched over to using TikZ for diagram creation.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>nominipagerestore</code></p>
+                    <p><b>Default:</b> enabled</p>
+                    <p>Restores the <code>\parskip</code> length in <code>minipage</code> environments.</p>
+                    <p>
+                      By default, <code>minipage</code> environments resets the <code>\parskip</code>
+                      length to zero, which can cause some uneven formatting.
+                      This setting restores the <code>\parskip</code> value inside <code>minipage</code>
+                      environments, and is enabled by default.
+                    </p>
+                    <p>
+                      There shouldn't really be a reason why you'd disable this,
+                      unless you prefer the modified <code>\parskip</code> value.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>times</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Overrides the font settings to use Times New Roman fonts.</p>
+                    <p>
+                      The default font I use in my <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span>
+                      documents is <a href="https://fonts.adobe.com/fonts/utopia">Utopia font</a> from Adobe,
+                      through the <a href="https://ctan.org/tex-archive/fonts/utopia">Utopia package</a>.
+                    </p>
+                    <p>
+                      However, some people may prefer Times New Roman (which is the font I've used prior
+                      to switching over to Utopia), and this setting allows for a clean and seamless switch.
+                    </p>
+                    <p>
+                      There are a few internal changes regarding certain symbols and commands
+                      that are present in one font and not the other; a fair warning that
+                      these differences are not all covered, as I don't typically use this setting anymore.
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</main>
-<footer class="footer bg-light">
-  <div class="container-sm container-scale">
-    Copyright &copy; 2021 Alec Li
-  </div>
-</footer>
-</body>
+    </main>
+    <footer class="footer bg-light">
+      <div class="container-sm container-scale">
+        Copyright &copy; 2021 Alec Li
+      </div>
+    </footer>
+  </body>
 </html>
