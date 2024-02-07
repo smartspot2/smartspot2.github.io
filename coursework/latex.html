@@ -10,7 +10,7 @@
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
     <script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <!--  Styles  -->
     <link href="../css/styles.css" rel="stylesheet"/>
@@ -123,6 +123,8 @@ Before now, I've always manually typeset diagrams using the TikZ and PGFPlots pa
         <code>physics</code> package that I compiled from the package sources, containing only the <code>\qty</code>
         command and the modified math commands.
         My preamble is always evolving as I typeset more, and I will periodically update the version on this page.
+        The current version of the preamble should be compatible with TeX Live 2023
+        (there are likely some incompatibilities with TeX Live 2022, since many packages had breaking changes).
       </p>
       <p>
         <b>Note:</b> it is not the best idea to use my preamble as-is, if you are looking for a long-term solution;
@@ -177,11 +179,10 @@ Before now, I've always manually typeset diagrams using the TikZ and PGFPlots pa
                   <li>
                     <p><code>homework</code></p>
                     <p><b>Enables:</b>
-                      <code>tikz</code>, <code>circuits</code>, <code>enumerate</code>
+                      <code>tikz</code>, <code>circuits</code>
                     </p>
                     <p>
-                      Initializes <code>enumerate</code> environments for homework typesetting,
-                      and includes all packages for diagram creation (TikZ, PGFPlots, and CircuiTikZ).
+                      Includes all packages for diagram creation (TikZ, PGFPlots, and CircuiTikZ).
                     </p>
                     <p>
                       If necessary, one can use the <code>noenumerate</code> flag to revert the enumerate changes.
@@ -191,11 +192,13 @@ Before now, I've always manually typeset diagrams using the TikZ and PGFPlots pa
                     <p><code>lecture</code></p>
 
                     <p><b>Enables:</b>
-                      <code>tikz</code>, <code>circuits</code>, <code>tcbtheorems</code>, <code>fancysections</code>
+                      <code>tikz</code>, <code>circuits</code>, <code>tcbtheorems</code>, <code>fancysections</code>,
+                      <code>bibtex</code>
                     </p>
                     <p>
                       Initializes commands and theorem environments for typesetting lecture notes,
                       and also includes all packages for diagram creation.
+                      Also configures the <code>biblatex</code> package for references.
                     </p>
                     <p>
                       The <code>\lecture[<i>date</i>]{<i>title</i>}</code> command
@@ -241,6 +244,15 @@ Before now, I've always manually typeset diagrams using the TikZ and PGFPlots pa
                     Changes package settings to be compatible with the <code>beamer</code> document class.
                     I don't use beamer too much at all, so I may update the preamble at some point
                     breaking this flag.
+                  </p>
+
+                  <li>
+                    <p><code>exam</code></p>
+                    <p><b>Enables:</b> <code>tikz</code>, <code>circuits</code></p>
+                  </li>
+                  <p>
+                    To be used with the <code>exam</code> documentclass (i.e. <code>\documentclass{exam}</code>).
+                    Adjusts various settings to ensure compatibility with the document class.
                   </p>
                 </ul>
                 <h5>Options</h5>
@@ -318,6 +330,36 @@ Before now, I've always manually typeset diagrams using the TikZ and PGFPlots pa
                       code blocks is changed to a light blue to differentiate between
                       answer code blocks and problem statement code blocks.
                     </p>
+                    <p>
+                      This option also defines a new <code>tminted</code> environment, utilizing
+                      the <code>tcolorbox</code> package for fancier formatting of the code blocks.
+                      In particular, you can add titles to your code blocks, customize the background and borders,
+                      along with additional positioning options, allowing the code blocks to be placed side-by-side in a page, etc.
+                      Using a <code>tcolorbox</code> also tends allows for better page breaking within a code block,
+                      though it's not always perfect (much like the default <code>minted</code> environment).
+                    </p>
+                    <p>
+                      The custom <code>tminted</code> environment takes in a new custom argument
+                      that is passed directly to the underlying <code>tcolorbox</code> environment.
+                      Formally, the syntax is:
+                      <code>\begin{tminted}[<i>minted options</i>]{<i>language</i>}[<i>tcolorbox options</i>]</code>
+                    </p>
+                    <p>
+                      For side-by-side placement of code blocks, the <code>tcbraster</code> environment can be used
+                      (provided by the <code>tcolorbox</code> package). A custom <code>sidebysideraster</code>
+                      style is defined as well to make the configuration a little easier.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>tcbminted</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Enables the minted package, with code blocks displayed using the <code>tcolorbox</code> package.</p>
+                    <p>See the <code>minted</code> option for more details.</p>
+                    <p>
+                      Completely replaces the original <code>minted</code> environment with the custom <code>tminted</code>
+                      environment. This may cause issues if there are already existing <code>minted</code> environments
+                      in the document, created without this option enabled.
+                    </p>
                   </li>
                   <li>
                     <p><code>pgfexternal</code></p>
@@ -354,7 +396,7 @@ Before now, I've always manually typeset diagrams using the TikZ and PGFPlots pa
                     </p>
                   </li>
                   <li>
-                    <p><code>nominipagerestore</code></p>
+                    <p><code>minipagerestore</code>, <code>nominipagerestore</code></p>
                     <p><b>Default:</b> enabled</p>
                     <p>Restores the <code>\parskip</code> length in <code>minipage</code> environments.</p>
                     <p>
@@ -385,6 +427,81 @@ Before now, I've always manually typeset diagrams using the TikZ and PGFPlots pa
                       There are a few internal changes regarding certain symbols and commands
                       that are present in one font and not the other; a fair warning that
                       these differences are not all covered, as I don't typically use this setting anymore.
+                  </li>
+                  <li>
+                    <p><code>lecturenewpage</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Adds a <code>\newpage</code> after every call to <code>\lecture</code>.</p>
+                    <p>
+                      This option should only be used in conjunction with the <code>lecture</code> option group.
+                    </p>
+                    <p>
+                      Some people prefer to have each lecture start on a separate page,
+                      and this option modifies the lecture header commands to start on new pages.
+                      I personally prefer the lectures to flow continuously without starting a new page,
+                      as sometimes it can leave awkward mostly blank pages at the end of lectures.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>bibtex</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>
+                      Includes and configures the <code>biblatex</code> package.
+                    </p>
+                    <p>
+                      The citation style that is configured uses the <code>alphabetic</code> style
+                      that comes with <code>biblatex</code>.
+                      Other options are also set; ex. line breaks within URLs, and disabling URLs in citations
+                      (as they tend to clutter the citation and cause line overflows;
+                      the DOI and other identification numbers are usually sufficient for locating the reference).
+                    </p>
+                    <p>
+                      To utilize citations with <code>biblatex</code>, you need to define a <code>.bib</code> file
+                      containing the citations in the <code>bibtex</code> format.
+                      This file can be included in your source code through <code>\addbibresource{filename.bib}</code>,
+                      and the bibliography can be printed through <code>\printbibliography</code>.
+                    </p>
+                    <p>
+                      By default, if <code>fancysections</code> is enabled,
+                      the bibliography header will match the lecture headers (i.e. displayed inside a fancy box).
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>refsegments</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Adds reference sections after each lecture section.</p>
+                    <p>
+                      By default, the <code>lecture</code> option group allows for a reference section to be added
+                      at the end of the document through <code>\printbibliography</code>.
+                      This option also adds automatic biliographies to be inserted after each lecture section,
+                      containing only references used in the section.
+                    </p>
+                    <p>
+                      This option is especially useful if you want the lectures to be distributed standalone
+                      (along with the <code>lecturenewpage</code> option),
+                      as all the necessary citations will be connected directly with each lecture.
+                    </p>
+                  </li>
+                  <li>
+                    <p><code>colorlinks</code></p>
+                    <p><b>Default:</b> disabled</p>
+                    <p>Enables link colors throughout the document.</p>
+                    <p>
+                      By default, all links in the document are not colored; the links use the original text color.
+                      Sometimes, (ex. in a document with many figures) you may want the links to be colored in blue,
+                      so that they are more easily identified. This option will enable these link colors.
+                    </p>
+                    <p>
+                      However, note that the links in the table of contents will also be colored,
+                      which may not be the intention. To get around this, surround the table of contents commands
+                      (i.e. <code>\tableofcontents</code>) with curly braces, and add <code>\hypersetup{hidelinks}</code>
+                      as the first line inside the braces.
+                    </p>
+                    <p>
+                      That is, it should look like <code>{\hypersetup{hidelinks}\tableofcontents}</code>.
+                      The curly braces ensures that the <code>\hypersetup{}</code> command only applies locally,
+                      and does not apply to other parts of the document.
+                    </p>
                   </li>
                 </ul>
               </div>

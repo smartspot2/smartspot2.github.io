@@ -1,3 +1,4 @@
+% Custom generic preamble; supports texlive 2022
 \ProvidesPackage{preamble}
 
 % ----- Package options -----
@@ -8,9 +9,13 @@
 \newif\ifopt@pgfexternal\opt@pgfexternalfalse
 \newif\ifopt@circuits\opt@circuitsfalse
 \newif\ifopt@enumerate\opt@enumeratefalse
+\newif\ifopt@colorlinks\opt@colorlinksfalse
 
+\newif\ifopt@lecturenewpage\opt@lecturenewpagefalse
 \newif\ifopt@tcbtheorems\opt@tcbtheoremsfalse
 \newif\ifopt@fancysections\opt@fancysectionsfalse
+\newif\ifopt@bibtex\opt@bibtexfalse
+\newif\ifopt@refsegments\opt@refsegmentsfalse
 
 \newif\ifopt@cheatsheetlengths\opt@cheatsheetlengthsfalse
 \newif\ifopt@smallercomponents\opt@smallercomponentsfalse
@@ -19,6 +24,7 @@
 
 \newif\ifopt@asymptote\opt@asymptotefalse
 \newif\ifopt@minted\opt@mintedfalse
+\newif\ifopt@tcbminted\opt@tcbmintedfalse
 
 \newif\ifopt@times\opt@timesfalse
 
@@ -26,6 +32,7 @@
 \newif\ifoptgroup@lecture\optgroup@lecturefalse
 \newif\ifoptgroup@cheatsheet\optgroup@cheatsheetfalse
 \newif\ifoptgroup@beamer\optgroup@beamerfalse
+\newif\ifoptgroup@exam\optgroup@examfalse
 
 \gdef\auxdir{out}
 
@@ -35,9 +42,14 @@
     \opt@tikztrue%
     \opt@circuitstrue%
 }
-\DeclareOption{circuits}{\opt@circuitstrue}
-\DeclareOption{pgfexternal}{\opt@pgfexternaltrue}
-\DeclareOption{tcbtheorems}{\opt@tcbtheoremstrue}
+\DeclareOption{circuits}{\opt@circuitstrue}  % enable circuits
+\DeclareOption{pgfexternal}{\opt@pgfexternaltrue}  % enable externalizing pgf figures
+
+\DeclareOption{lecturenewpage}{\opt@lecturenewpagetrue}  % add \newpage after every lecture
+\DeclareOption{tcbtheorems}{\opt@tcbtheoremstrue}  % tcolorbox for theorems
+\DeclareOption{bibtex}{\opt@bibtextrue}  % use bibtex
+\DeclareOption{nobibtex}{\opt@bibtexfalse}  % disable bibtex
+\DeclareOption{refsegments}{\opt@refsegmentstrue}  % add reference sections around each lecture section
 
 \DeclareOption{asymptote}{\opt@asymptotetrue}
 \DeclareOption{enumerate}{\opt@enumeratetrue}
@@ -45,8 +57,11 @@
 \DeclareOption{narrowmargins}{\opt@narrowmarginstrue}
 \DeclareOption{cheatsheetlengths}{\opt@cheatsheetlengthstrue}
 \DeclareOption{smallercomponents}{\opt@smallercomponentstrue}
+\DeclareOption{minipagerestore}{\opt@minipagerestoretrue}
 \DeclareOption{fancysections}{\opt@fancysectionstrue}
 \DeclareOption{minted}{\opt@mintedtrue}
+\DeclareOption{tcbminted}{\opt@mintedtrue\opt@tcbmintedtrue}
+\DeclareOption{colorlinks}{\opt@colorlinkstrue}
 
 \DeclareOption{notikz}{\opt@tikzfalse}
 \DeclareOption{nocircuits}{\opt@circuitsfalse}
@@ -65,7 +80,7 @@
     \optgroup@homeworktrue%
     \opt@tikztrue%
     \opt@circuitstrue%
-    \opt@enumeratetrue%
+    %\opt@enumeratetrue%
 }
 
 \DeclareOption{lecture}{%
@@ -74,6 +89,7 @@
     \opt@circuitstrue%
     \opt@tcbtheoremstrue%
     \opt@fancysectionstrue%
+    \opt@bibtextrue%
 }
 
 \DeclareOption{cheatsheet}{%
@@ -87,6 +103,13 @@
 
 \DeclareOption{beamer}{%
     \optgroup@beamertrue%
+    \opt@tikztrue%
+    \opt@circuitstrue%
+}
+
+\DeclareOption{exam}{%
+    \optgroup@examtrue%
+    \opt@tikztrue%
     \opt@circuitstrue%
 }
 
@@ -123,14 +146,22 @@
     \RequirePackage{anyfontsize}
     \RequirePackage{fourier}
     \RequirePackage{mathrsfs}
-    \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+    \RequirePackage[cal=cm]{mathalpha}
+    %\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
     % sans-serif font
     \usepackage[semibold,scale=0.97]{sourcesanspro}
+    % no small caps + italic, so just use small caps
+    \AtBeginDocument{\DeclareFontShape{T1}{futs}{m}{scit}{<->ssub*futs/m/sc}{}}
+    \usepackage{pifont}  % for dingbats and other symbols
 \fi
 
 \RequirePackage[table]{xcolor}  % Colored text
 % dark green definition, as green is too bright
 \colorlet{darkgreen}{green!60!black}
+% dark red definition
+\colorlet{darkred}{red!60!black}
+% dark blue definition
+\colorlet{darkblue}{blue!60!black}
 
 % Math shortcuts
 \RequirePackage{siunitx}  % formatting SI units (loaded before physics to avoid warning)
@@ -142,7 +173,10 @@
 \RequirePackage{thmtools}
 % \RequirePackage{kbordermatrix}  % border text on matrices
 \RequirePackage[short]{optidef}  % optimization problem definitions
+\RequirePackage[single]{accents}  % fixes some nested accent issues with amsmath, adds manual accent set
 \RequirePackage[replace]{widebar}  % custom package for wider/better \bar{}
+\RequirePackage{xfrac}  % fraction types
+\RequirePackage{stackrel}
 
 % siunitx per symbol
 \sisetup{per-mode=symbol}
@@ -152,6 +186,7 @@
 
 % Tables
 \RequirePackage{booktabs}  % Improved tables
+\RequirePackage{threeparttable}  % Footnotes in tables
 
 % Graphics
 \RequirePackage{graphicx}  % External graphics
@@ -169,9 +204,11 @@
 \fi
 
 \ifoptgroup@lecture
-    % change figure counter to include section number
+    % change counters to include section number
     \RequirePackage{chngcntr}
     \counterwithin{figure}{section}
+    \counterwithin{table}{section}
+    \counterwithin{equation}{section}
 \fi
 
 
@@ -179,9 +216,13 @@
 \ifoptgroup@beamer
     % no headers if beamer
 \else
-    \RequirePackage{fancyhdr, titling}
-    \RequirePackage[explicit]{titlesec}  % fancy section headers
-    \RequirePackage{titletoc}
+    \ifoptgroup@exam
+        % no headers if exam; use exam class headers
+    \else
+        \RequirePackage{fancyhdr, titling}
+        \RequirePackage[explicit]{titlesec}  % fancy section headers
+        \RequirePackage{titletoc}
+    \fi
 \fi
 
 % Formatting
@@ -223,9 +264,11 @@
     mathescape=true,
     xleftmargin=3pt,
     numbersep=7pt,
+    breaklines=true,
+    postbreak=\mbox{$\hookrightarrow$\space},
     % colors
     backgroundcolor=\color{lstbgcolor},
-    basicstyle=\color{lstfgcolor}\footnotesize\ttfamily,
+    basicstyle=\color{lstfgcolor}\small\ttfamily,
     commentstyle=\color{lstcommentcolor}\itshape,
     identifierstyle={},%\color{lstidentifiercolor},
     stringstyle=\color{lststringcolor},
@@ -258,13 +301,73 @@
         linenos,
         mathescape,
         python3,
-        fontsize=\footnotesize,
-        bgcolor=lstbgcolor,
+        fontsize=\small,
+        %bgcolor=lstbgcolor,  % no bgcolor if using tcolorbox
         numbersep=4pt,
         style=atomonelight,  % custom minted style; falls back to default style
     }
     \renewcommand{\theFancyVerbLine}{\ttfamily \textcolor{lstlinenumbercolor}{\arabic{FancyVerbLine}}}
     \fvset{listparameters=\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}}
+
+    % tcolorbox integration with minted
+    \RequirePackage{tcolorbox}
+    \RequirePackage{tikz}
+    \tcbuselibrary{breakable, skins, minted, hooks}
+    \tcbuselibrary{raster}  % for side-by-side code
+    \tcbset{listingoverridestyle/.style={}}
+    % Usage: \begin{tminted}[minted options]{language}[tcb options]
+    %\newtcblisting{tminted}[2][]{
+    %    minted language=#2,
+    %    minted options pre={numbersep=7pt},
+    %    listing only,
+    %    enhanced jigsaw, breakable,
+    %    size=small,
+    %    coltitle=black, colback=lstbgcolor,
+    %    frame hidden, arc=2pt,
+    %    grow to left by=1pt, left=0pt,
+    %    toptitle=0pt, bottomtitle=2pt,
+    %    listingoverridestyle,
+    %    #1
+    %}
+    \NewTCBListing{tminted}{ O{} m !O{} }{%
+        minted language=#2,
+        minted options pre={numbersep=7pt, #1},
+        listing only,
+        enhanced jigsaw, breakable,
+        size=small,
+        coltitle=black, colback=lstbgcolor,
+        frame hidden, arc=2pt,
+        grow to left by=1pt, left=0pt,
+        toptitle=0pt, bottomtitle=2pt,
+        listingoverridestyle,
+        #3
+    }
+    \tcbset{
+        sidebysideraster/.style={
+            enhanced,
+            listing only,
+            raster columns=2,
+            raster equal height=rows,
+            raster left skip=0pt, raster right skip=0pt,
+            raster column skip=12pt,
+            raster column 1/.style={
+                sharp corners=east,
+                rightrule=0pt
+            },
+            raster column 2/.style={
+                sharp corners=west,
+                leftrule=0pt
+            }
+        }
+    }
+
+    % replace default minted environment with tminted
+    \ifopt@tcbminted
+        \let\oldminted\minted%
+        \let\endoldminted\endminted%
+        \let\minted\tminted%
+        \let\endminted\endtminted%
+    \fi
 \fi
 
 % Misc.
@@ -284,11 +387,35 @@
 \else
     \PassOptionsToPackage{hidelinks,hypertexnames=false}{hyperref}  % allow for option overrides
     \RequirePackage{hyperref}  % Links
-    \hypersetup{hypertexnames=false}  % avoid conflicts in hyperref names
+    \hypersetup{
+        hypertexnames=false,  % avoid conflicts in hyperref names
+        linktoc=all,  % link toc numbers along with text
+    }
     \RequirePackage[capitalize]{cleveref}  % better references
+
+    % setting to color all links
+    \ifopt@colorlinks
+        \hypersetup{colorlinks=true,linktoc=all,allcolors=blue}
+    \fi
 \fi
 \RequirePackage{bookmark}  % hyperref extension
 \robustify{\label}  % protect the label command
+
+% bibtex
+\ifopt@bibtex
+    \RequirePackage[backend=biber,style=alphabetic,minnames=3,minalphanames=3,maxbibnames=999]{biblatex}  % bibtex citations
+    \setlength{\bibitemsep}{\parsep}  % add space between bibliography items
+    \setcounter{biburlnumpenalty}{9000}  % allow line breaks on numbers, but inflict high penalty
+    % only show URL if DOI not specified
+    \DeclareSourcemap{%
+        \maps[datatype=bibtex]{%
+            \map[overwrite]{%
+                \step[fieldsource=doi, final]
+                \step[fieldset=url, null]
+            }
+        }
+    }
+\fi
 
 % Tikz, pgfplots
 \ifopt@tikz
@@ -301,7 +428,7 @@
         \usepgfplotslibrary{external}  % externalize to speed up
         \tikzexternalize
         % use job name (filename) as inner folder
-        \tikzsetexternalprefix{out/figures/\tikzexternalrealjob/}
+        \tikzsetexternalprefix{figures/\tikzexternalrealjob/}
         %\tikzset{external/force remake}
     \fi
 
@@ -326,8 +453,9 @@
 
     \pgfplotsset{compat=1.17}
 
-    \usetikzlibrary{calc,trees,positioning,arrows,fit,shapes,calc,intersections,fadings,decorations.markings,decorations.pathmorphing,matrix}
+    \usetikzlibrary{calc,trees,positioning,arrows,fit,shapes,calc,intersections,fadings,decorations,decorations.markings,decorations.pathmorphing,calligraphy,matrix,math,patterns,patterns.meta}
     \usepgfplotslibrary{fillbetween,patchplots,groupplots,statistics}
+    \usepgfplotslibrary{colorbrewer}
 
     %\pgfkeys{/pgf/plot/gnuplot call={cd \auxdir && gnuplot}}  % set gnuplot directory
     % edit contour gnuplot command, which needs special configuration
@@ -358,6 +486,20 @@
     % set color map limit because zathura can't handle it
     \def\pgfplotscolormappdfmax{1} \def\pgfplotscolormappdfmax@inv{1000}
 
+    % tikz-qtree
+    \tikzset{
+        /tikz/qtree/.style={
+            level distance=20pt,
+        },
+        /tikz/bracketedges/.style={
+            edge from parent/.style={draw, edge from parent path={
+                (\tikzparentnode.south) -- +(0,-4pt) -| (\tikzchildnode)}
+            }
+        },
+        /tikz/flatfrontier/.style={frontier/.style={distance from root=#1}},
+        /tikz/flatfrontierlevels/.style={frontier/.style={distance from root={#1*20pt}}}
+    }
+
     % Markov chains
     \usetikzlibrary{automata}
     \tikzset{%
@@ -373,6 +515,13 @@
             loop right/.append style={in=-25, out=25, looseness=5},
             loop above/.append style={in=65, out=115, looseness=5},
             loop below/.append style={in=-115, out=-65, looseness=5},
+            /tikz/wide/.style={%
+                node distance=50pt
+            },
+            /tikz/empty/.append style={minimum size=15pt},
+            /tikz/narrow/.style={%
+                node distance=20pt
+            },
         }
     }
     % 3d plots
@@ -402,6 +551,21 @@
             }
         },
     }
+    % other shapes
+    \tikzset{
+        triangle/.style={regular polygon, regular polygon sides=3, inner sep=2pt, anchor=north}
+    }
+    % node fitting around a path
+    \tikzset{
+        fitting node/.style={
+            inner sep=0pt,
+            fill=none,
+            draw=none,
+            reset transform,
+            fit={(\pgf@pathminx,\pgf@pathminy) (\pgf@pathmaxx,\pgf@pathmaxy)}
+        },
+        reset transform/.code={\pgftransformreset}
+    }
 
     % box and pointer diagrams
     \tikzset{
@@ -419,8 +583,15 @@
     \NewDocumentCommand{\tikzarray}{ O{0,0} m m }{%
         \node[outer sep=0pt, inner sep=0pt] (#2-0) at (#1) {};
         \foreach[count=\i] \x in {#3} {
-            \pgfmathsetmacro\prev{\i - 1}
+            \pgfmathtruncatemacro\prev{\i - 1}
             \node[element, draw, right=0pt of #2-\prev] (#2-\i) {\x};
+        }
+    }
+    \NewDocumentCommand{\tikzarrayvert}{ O{0,0} m m }{%
+        \node[outer sep=0pt, inner sep=0pt] (#2-0) at (#1) {};
+        \foreach[count=\i] \x in {#3} {
+            \pgfmathtruncatemacro\prev{\i - 1}
+            \node[outer sep=0pt, minimum size=20pt, draw, below=of #2-\prev] (#2-\i) {\x};
         }
     }
     \RequirePackage{xstring}
@@ -453,6 +624,52 @@
             \node[anchor=west] (\labelprefix-end) at (\labelprefix-arrow-\last) {$\emptyset$};
         }
     }
+
+    % 3d cylinder between two points; does NOT work for vertical cylinders (i.e. only changing z coordinate)
+    % \tikzcylinderbetween[tikz arguments]{start_x}{start_y}{start_z}{end_x}{end_y}{end_z}
+    \NewDocumentCommand{\tikzcylinderbetween}{ O{} m m m m m m m }{%
+        \edef\r{(#2)}
+        \edef\sx{(#3)}
+        \edef\sy{(#4)}
+        \edef\sz{(#5)}
+        \edef\ex{(#6)}
+        \edef\ey{(#7)}
+        \edef\ez{(#8)}
+        \edef\vx{(\ex-\sx)}
+        \edef\vy{(\ey-\sy)}
+        \edef\vz{(\ez-\sz)}
+        \edef\mag{sqrt(\vx^2 + \vy^2 + \vz^2)}
+
+        % Mathematica code to generate this vector:
+        % FullSimplify[
+        %   TransformationMatrix[
+        %     RotationTransform[{{0, 0, 1}, {Subscript[v, x], Subscript[v, y], Subscript[v, z]}}]
+        %   ],
+        % Assumptions -> {Subscript[v, x] \[Element] Reals, Subscript[v, y] \[Element] Reals, Subscript[v, z] \[Element] Reals}
+        % ]
+        % . ( { {r Cos[t]}, {r Sin[t]}, {x}, {1} } )
+        % + ( { {Subscript[s, x]}, {Subscript[s, y]}, {Subscript[s, z]}, {0} } )
+        \addplot3[domain=0:\mag, domain y=0:360, variable y=t, #1] (
+            {\sx + (x*\vx)/\mag + (\r*sin(t)*\vx*\vy*(-1 + \vz/\mag))/(\vx^2 + \vy^2) + (\r*cos(t)*(\vy^2 + (\vx^2*\vz)/\mag))/(\vx^2 + \vy^2)},
+            {\sy + (x*\vy)/\mag + (\r*cos(t)*\vx*\vy*(-1 + \vz/\mag))/(\vx^2 + \vy^2) + (\r*sin(t)*(\vx^2 + (\vy^2*\vz)/\mag))/(\vx^2 + \vy^2)},
+            {\sz - (\r*cos(t)*\vx)/\mag - (\r*sin(t)*\vy)/\mag + (x*\vz)/\mag}
+        );
+    }
+    % vertical 3D cylinder
+    % \tikzcylinderbetween[]{r}{x}{y}{start_z}{end_z}
+    \NewDocumentCommand{\tikzcylindervertical}{ O{} m m m m m }{%
+        \edef\r{#2}
+        \edef\offsetx{#3}
+        \edef\offsety{#4}
+        \edef\sz{#5}
+        \edef\ez{#6}
+
+        \addplot3[domain=\sz:\ez, domain y=0:360, variable y=t, #1] (
+            {\offsetx + \r*cos(t)},
+            {\offsety + \r*sin(t)},
+            {x}
+        );
+    }
 \fi
 
 % Asymptote
@@ -463,8 +680,8 @@
 
 \usepackage[ISO]{diffcoeff}  % derivatives
 % change evaluation bar to |
-\diffdef{}{left-delim=\left., right-delim=\right|, subscr-nudge=0mu}
-\diffdef{p}{op-symbol=\partial, left-delim=\left., right-delim=\right|, subscr-nudge=0mu}
+\difdef{f}{}{outer-Ldelim=\left., outer-Rdelim=\right|, sub-nudge=0mu}
+\difdef{f}{p}{op-symbol=\partial, outer-Ldelim=\left., outer-Rdelim=\right|, sub-nudge=0mu}
 \RenewDocumentCommand\diffp{}{\diff.p.}
 
 % ----- Math Operators -----
@@ -483,24 +700,53 @@
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\nullity}{null}
 \DeclareMathOperator{\Trace}{Tr}
+\DeclareMathOperator{\Adj}{Adj}  % Adjoint
+\DeclareMathOperator{\id}{id}
 \newcommand{\diag}{\opbraces{\operatorname{diag}}}
+\DeclareMathOperator{\lcm}{lcm}
 
 \DeclareMathOperator{\erf}{erf}  % Gauss error function
 \DeclareMathOperator{\corr}{corr}  % correlation
 
+\newcommand{\Oh}{\opbraces{O}}  % Big oh
+\newcommand{\oh}{\opbraces{o}}  % Little oh
+
 \DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\poly}{poly}  % polynomial
+\DeclareMathOperator{\polylog}{polylog}  % polynomial log
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\val}{val}
+\DeclareMathOperator{\rev}{rev}
+\DeclareMathOperator{\cost}{cost}
 
 \DeclareMathOperator{\diam}{diam}  % diameter
 \DeclareMathOperator{\length}{length}  % length
 \DeclareMathOperator{\Residue}{Res}  % residue
+\DeclareMathOperator{\Log}{Log}  % complex log
+\DeclareMathOperator{\Arg}{Arg}  % complex argument
+
+\DeclareMathOperator{\len}{len}  % length
+\DeclareMathOperator{\ord}{ord}  % order
+\DeclareMathOperator{\orb}{orb}  % orbit
+\DeclareMathOperator{\Syl}{Syl}  % Sylow
 
 \DeclareMathOperator{\from}{\colon}
 \newcommand{\divides}{\mid}
 \newcommand{\notdivides}{\nmid}
 \newcommand{\powerset}{\mathscr{P}}
+\newcommand{\inj}{\hookrightarrow}  % injection
+\newcommand{\surj}{\twoheadrightarrow}  % surjection
 
+\newcommand{\proves}{\vdash}
+
+\newcommand{\mmid}{\mathop{}\middle\vert\mathop{}}  % \middle\vert with spacing
+
+% \Pr consuming parentheses
+%\RenewDocumentCommand{\Pr}{s r()}{\operatorname{\mathbb{P}}\mathopen{}\IfBooleanTF{#1}{}{\opbraces{}}[#2]}
 \renewcommand{\Pr}{\operatorname{\mathbb{P}}\mathopen{}\opbraces{}}  % Probability
 \WithSuffix\newcommand\Pr*{\operatorname{\mathbb{P}}\mathopen{}}  % Probability (no qty)
+
 \newcommand{\Exp}{\operatorname{\mathbb{E}}\mathopen{}\opbraces{}}  % Expected value
 \WithSuffix\newcommand\Exp*{\operatorname{\mathbb{E}}\mathopen{}}  % Expected value (no qty)
 \newcommand{\LLSE}{\operatorname{\mathbb{L}}\mathopen{}\opbraces{}}  % Linear least squares estimator
@@ -522,12 +768,19 @@
     \newcommand{\vecbar}[1]{\,\overline{\!#1}}  % bar to be used over a vector
 \fi
 \newcommand{\mat}[1]{\mathbf{#1}}  % Matrix variable
-\newcommand{\dd}{\dl3}
-\WithSuffix\newcommand\dd*{\dl0}  % derivative d without any prior space (to be used by itself with inline text)
-\newcommand{\ddel}{\dl.delta.3}
-\newcommand{\ddp}{\dl.p.3}
-\newcommand{\pdd}{\dl.p.3}  % alias for \ddp
+
+% derivatives
+\difdef{l}{delta}{op-symbol=\Delta}
+\difdef{l}{p}{op-symbol=\partial}
+\difdef{l}{0}{outer-Ldelim=}
+\newcommand{\dd}{\dl}
+\WithSuffix\newcommand\dd*{\dl.0.}  % derivative d without any prior space (to be used by itself with inline text)
+\newcommand{\ddel}{\dl.delta.}
+\newcommand{\ddp}{\dl.p.}
+\newcommand{\pdd}{\dl.p.}  % alias for \ddp
+
 \newcommand{\definedas}{\coloneqq}
+\newcommand{\definedby}{\eqqcolon}
 
 % matrix row/column vector rules
 % \newcommand{\rowrule}{\rotatebox[origin=c]{90}{$\vert$}}
@@ -544,9 +797,14 @@
 \newcommand{\floor}[1]{\pairedfloor*{#1}}
 \DeclarePairedDelimiter{\pairedceil}{\lceil}{\rceil}
 \newcommand{\ceil}[1]{\pairedceil*{#1}}
+\DeclarePairedDelimiter{\pairedround}{\lfloor}{\rceil}
+\newcommand{\round}[1]{\pairedround*{#1}}
 
 \DeclarePairedDelimiter{\pairedeval}{.}{\rvert}  % evaluated at bar
 \newcommand{\eval}[1]{\pairedeval*{#1}}
+
+\newcommand{\gen}[1]{\pairedvinner*{#1}}  % alias; for <x> as the generating element of a subgroup
+\newcommand{\group}[1]{\operatorname{#1}}  % group names (ex. GF(p), GL(n), SO(n), etc.)
 
 % Distributions
 \DeclareMathOperator{\Unif}{Uniform}
@@ -563,12 +821,19 @@
 \let\oldemptyset\emptyset%
 \let\emptyset\varnothing%
 
+% Miscellaneous symbols
+\newcommand\cmark{\text{\ding{51}}}
+\newcommand\xmark{\text{\makebox[0pt][l]{\ding{55}}\hphantom{\ding{51}}}}
+
 % mapsfrom
 \ifopt@times
     % already defined
 \else
     \newcommand\mapsfrom{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
 \fi
+
+\RequirePackage{proof}  % proof diagrams in mathematical logic
+\setlength{\inferLabelSkip}{1em}
 
 % ----- Commands -----
 
@@ -611,8 +876,16 @@
         \def\endidxlen{#1}
     \fi
     \foreach \idx in {#3, ..., #4}{%
+        \ifopt@refsegments
+            \newrefsegment
+        \fi
         \def\formatidx{\padinteger{\endidxlen}{\idx}}
         \subfile{#2\formatidx.tex}
+        \ifopt@refsegments
+            \printbibliography[segment=\idx,heading=subbibliography]
+        \fi
+        % add new page after every lecture
+        \ifopt@lecturenewpage\newpage\fi
     }
 }
 
@@ -645,12 +918,14 @@
     \newlistof[section]{tcbdefinition}{definitionlist}{Definitions}
     \newlistof[section]{tcblemma}{lemmalist}{Lemmas}
     \newlistof[section]{tcbcorollary}{corollarylist}{Corollaries}
+    \newlistof[section]{tcbproposition}{propositionlist}{Propositions}
 
-    \setlength{\cfttcbtheoremnumwidth}{23pt}
-    \setlength{\cfttcbexamplenumwidth}{23pt}
-    \setlength{\cfttcbdefinitionnumwidth}{23pt}
-    \setlength{\cfttcblemmanumwidth}{23pt}
-    \setlength{\cfttcbcorollarynumwidth}{23pt}
+    \setlength{\cfttcbtheoremnumwidth}{25pt}
+    \setlength{\cfttcbexamplenumwidth}{25pt}
+    \setlength{\cfttcbdefinitionnumwidth}{25pt}
+    \setlength{\cfttcblemmanumwidth}{25pt}
+    \setlength{\cfttcbcorollarynumwidth}{25pt}
+    \setlength{\cfttcbpropositionnumwidth}{25pt}
 
     % theorem defined first so other counters are shared
     \newtcbtheorem[number within=section, list inside=theoremlist, list type=tcbtheorem]{tcbtheorem}{Theorem}{%
@@ -724,6 +999,22 @@
         \end{tcbcorollary}
         \intcbthmfalse%
     }
+    \newtcbtheorem[use counter from=tcbtheorem, list inside=propositionlist, list type=tcbproposition]{tcbproposition}{Proposition}{%
+        enhanced, breakable,
+        colback=blue!5, colbacktitle=blue!20, coltitle=black,
+        frame hidden, parbox=false,
+        arc=2pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
+        fonttitle=\bfseries,
+        segmentation style={solid, draw=blue!20, line width=1pt},
+        label type=tcb@cnt@tcbproposition
+    }{prop}
+    \newenvironmentx{proposition}[2][1={},2={}]{%
+        \intcbthmtrue%
+        \begin{tcbproposition}{#1}{#2}
+            }{%
+        \end{tcbproposition}
+        \intcbthmfalse%
+    }
     % redefine proof environment
     \expandafter\let\expandafter\oldproof\csname\string\proof\endcsname%
     \let\oldendproof\endproof%
@@ -744,6 +1035,8 @@
     \Crefname{tcb@cnt@tcblemma}{Lemma}{Lemmas}
     % \crefname{tcb@cnt@tcbcorollary}{corollary}{corollaries}
     \Crefname{tcb@cnt@tcbcorollary}{Corollary}{Corollaries}
+    % \crefname{tcb@cnt@tcbproposition}{proposition}{propositions}
+    \Crefname{tcb@cnt@tcbproposition}{Proposition}{Propositions}
 \else
     \ifoptgroup@beamer
         % beamer overrides theorem environments
@@ -762,13 +1055,13 @@
     \newcommand\sectiondate[1]{\def\sec@sectiondate{#1}}
     \newcommand\sectiondesc[1]{\def\sec@sectiondesc{#1}}
 
-    \titleclass{\lecturesection}{straight}[\chapter]
+    \titleclass{\lecturesection}[0]{straight}%[\chapter]
     \newcommand{\toclevel@lecturesection}{1}
-    \newcommand{\ttll@lecturesection}{1}
+    \renewcommand{\ttll@lecturesection}{1}
     \newcommand{\thelecturesection}{\arabic{lecturesection}}
-    \titleclass{\section}{straight}{\chapter}
+    %\titleclass{\section}{straight}{\chapter}
     \newaliascnt{lecturesection}{section}
-    \contentsmargin{1.5em}
+    \contentsmargin{2.5em}
     \titlecontents{lecturesection}[1.5em]{\addvspace{1em}\bfseries}{\contentslabel{1.5em}}{}{\hfill\contentspage}
     \titlespacing*{\lecturesection}{0pt}{2\baselineskip}{1\baselineskip}
 
@@ -783,25 +1076,45 @@
     {\centering{\Large\bfseries\filcenter#1}
     \ifthenelse{\equal{\sec@sectiondesc}{}}{}{\\[3pt] {\normalsize\itshape\sec@sectiondesc}}}
     [\def\sec@sectiondate{}\def\sec@sectiondesc{}]
+
+    % replace bibliography section
+    % \patchcmd{\thebibliography}{\section*{\refname}}{\lecturesection*{\refname}}
+    \defbibheading{bibliography}[\refname]{\lecturesection*{#1}\markboth{#1}{#1}}
 \fi
 
 % ----- Environments -----
 \colorlet{answercolor}{blue!80!black}
 \colorlet{mintedanswercolor}{blue!3!white}
-\newenvironment{answer}{%
-    \begin{adjustwidth}{1.25em}{1.25em}
-        \color{answercolor}
-        \tikzset{color=answercolor}
-        \ifopt@minted
-            \setminted{bgcolor=mintedanswercolor}
-        \fi
-        }{%
-        \tikzset{color=black}
-        \ifopt@minted
-            \setminted{bgcolor=lstbgcolor}
-        \fi
-    \end{adjustwidth}
-}
+\ifoptgroup@exam
+    \newenvironment{answer}{%
+        \begin{solution}
+    }{
+        \end{solution}
+    }
+\else
+    \newenvironment{answer}{%
+        \begin{adjustwidth}{1.25em}{1.25em}
+            \color{answercolor}
+            \tikzset{color=answercolor}
+            \ifopt@minted
+                \ifopt@tcbminted
+                    \tcbset{listingoverridestyle/.style={colback=mintedanswercolor}}
+                \else
+                    \setminted{bgcolor=mintedanswercolor}
+                \fi
+            \fi
+            }{%
+            \tikzset{color=black}
+            \ifopt@minted
+                \ifopt@tcbminted
+                    \tcbset{listingoverridestyle/.style={}}
+                \else
+                    \setminted{bgcolor=lstbgcolor}
+                \fi
+            \fi
+        \end{adjustwidth}
+    }
+\fi
 
 % ----- Enumerate labels -----
 
