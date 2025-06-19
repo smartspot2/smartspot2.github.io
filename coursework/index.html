@@ -1,170 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Courses</title>
-    <link href="../favicon.ico" rel="icon"/>
 
-    <!--  Bootstrap  -->
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
-    <script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Courses</title>
+  <link href="../favicon.ico" rel="icon" />
+
+  <!--  Bootstrap  -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
+  <script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!--  Styles  -->
-    <link href="../css/styles.css" rel="stylesheet"/>
+  <!--  Styles  -->
+  <link href="../css/styles.css" rel="stylesheet" />
 
-    <!--  Fonts  -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+  <!--  Fonts  -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
-    <!--  Feature detection  -->
-    <script src="../js/modernizr.js"></script>
-    <!--  Handle fallback with browsers that don't support webp  -->
-    <script src="../js/convert_webp.js"></script>
+  <!--  Feature detection  -->
+  <script src="../js/modernizr.js"></script>
+  <!--  Handle fallback with browsers that don't support webp  -->
+  <script src="../js/convert_webp.js"></script>
 
-    <!-- Google tag for site analytics (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W6YVCZH4SR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag for site analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W6YVCZH4SR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      gtag('config', 'G-W6YVCZH4SR');
-    </script>
-  </head>
+    gtag('config', 'G-W6YVCZH4SR');
+  </script>
+</head>
 
-  <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
-      <div class="container-sm container-scale">
-        <a class="navbar-brand" href="..">
-          <img class="nav-icon" alt="Phi" data-fallback-filetype="png"
-            draggable="false" src="../assets/img/Phi-icon.webp"/>
-          <span class="nav-text">Alec Li</span>
-        </a>
-        <button class="navbar-toggler" aria-controls="navbar-right" aria-expanded="false" aria-label="Toggle navigation"
-          data-bs-target="#navbar-right" data-bs-toggle="collapse" type="button">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navbar-right" class="collapse navbar-collapse ms-auto">
-          <ul class="navbar-nav ms-auto mb-0 mb-sm-2">
-            <li class="nav-item">
-              <a class="nav-link" href="..">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" aria-expanded="false" role="button">
-                Coursework
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="../coursework/latex.html">LaTeX</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../teaching">Teaching</a>
-            </li>
-          </ul>
-        </div>
+<body>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+    <div class="container-sm container-scale">
+      <a class="navbar-brand" href="..">
+        <img class="nav-icon" alt="Phi" data-fallback-filetype="png" draggable="false"
+          src="../assets/img/Phi-icon.webp" />
+        <span class="nav-text">Alec Li</span>
+      </a>
+      <button class="navbar-toggler" aria-controls="navbar-right" aria-expanded="false" aria-label="Toggle navigation"
+        data-bs-target="#navbar-right" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbar-right" class="collapse navbar-collapse ms-auto">
+        <ul class="navbar-nav ms-auto mb-0 mb-sm-2">
+          <li class="nav-item">
+            <a class="nav-link" href="..">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" aria-expanded="false" role="button">
+              Coursework
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="../coursework/latex.html">LaTeX</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../teaching">Teaching</a>
+          </li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <main class="container-sm container-scale">
-      <h2>Coursework</h2>
-      <p>Below is a list of all the CS/math major courses I have taken at UC Berkeley:</p>
-      <i>Spring 2024</i>
-      <ul>
-        <li><b>CS 168</b>: Introduction to the Internet: Architecture and Protocols</li>
-        <li><b>CS 278</b>: Computational Complexity Theory</li>
-        <li><b>EECS C106B</b>: Robotic Manipulation and Interaction</li>
-      </ul>
-      <i>Fall 2023</i>
-      <ul>
-        <li><b>CS 180</b>: Introduction to Computer Vision and Computational Photography</li>
-        <li><b>CS 285</b>: Deep Reinforcement Learning, Decision Making, and Control</li>
-        <li><b>CS 288</b>: Natural Language Processing</li>
-        <li><b>EECS C106A</b>: Introduction to Robotics</li>
-      </ul>
-      <i>Spring 2023</i>
-      <ul>
-        <li><b>CS 164</b>: Programming Languages and Compilers</li>
-        <li><b>CS 184</b>: Foundations of Computer Graphics</li>
-        <li><b>CS 270</b>: Combinatorial Algorithms and Data Structures
-          (<a href="../assets/pdf/CS270_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-        <li><b>MATH 128A</b>: Numerical Analysis</li>
-      </ul>
-      <i>Fall 2022</i>
-      <ul>
-        <li><b>CS 161</b>: Computer Security</li>
-        <li><b>CS 172</b>: Computability and Complexity
-          (<a href="../assets/pdf/CS172_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-        <li><b>MATH 113</b>: Introduction to Abstract Algebra
-          (<a href="../assets/pdf/MATH113_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-        <li><b>MATH 116</b>: Cryptography</li>
-      </ul>
-      <i>Spring 2022</i>
-      <ul>
-        <li><b>CS 162</b>: Operating Systems and Systems Programming</li>
-        <li><b>CS 189</b>: Introduction to Machine Learning
-          (<a href="../assets/pdf/CS189_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-        <li><b>MATH 185</b>: Introduction to Complex Analysis
-          (<a href="../assets/pdf/MATH185_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-      </ul>
-      <i>Fall 2021</i>
-      <ul>
-        <li><b>CS 170</b>: Efficient Algorithms and Intractable Problems
-          (<a href="../assets/pdf/CS170_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-        <li><b>EECS 127</b>: Optimization Models in Engineering</li>
-        <li><b>MATH 104</b>: Introduction to Analysis</li>
-        <li><b>MATH 110</b>: Linear Algebra
-          (<a href="../assets/pdf/MATH110_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-      </ul>
-      <i>Summer 2021</i>
-      <ul>
-        <li><b>CS 61C</b>: Machine Structures</li>
-      </ul>
-      <i>Spring 2021</i>
-      <ul>
-        <li><b>CS 61B</b>: Data Structures</li>
-        <li><b>EECS 16B</b>: Designing Information Devices and Systems II</li>
-        <li><b>EECS 126</b>: Probability and Random Processes
-          (<a href="../assets/pdf/EECS126_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-      </ul>
-      <i>Fall 2020</i>
-      <ul>
-        <li><b>CS 61A</b>: Structure and Interpretation of Computer Programs</li>
-        <li><b>EECS 16A</b>: Designing Information Devices and Systems I
-          (<a href="../assets/pdf/EECS16A_Cheatsheet.pdf" target="_blank">cheatsheet</a>)
-        </li>
-      </ul>
-      <i>Summer 2020</i>
-      <ul>
-        <li><b>CS 70</b>: Discrete Mathematics and Probability
-          (<a href="../assets/pdf/CS70_Cheatsheet.pdf" target="_blank">cheatsheet</a>)
-        </li>
-      </ul>
-      <hr>
+  <main class="container-sm container-scale">
+    <h2>Coursework</h2>
+    <p>Below is a list of all the courses I have taken at UC Berkeley (excluding teaching/research-related units):</p>
+    <i>Spring 2025</i>
+    <ul>
+      <li><b>CS C267</b>: Applications of Parallel Computers</li>
+      <li><b>CS C280</b>: Computer Vision</li>
+      <li><b>STAT 153</b>: Introduction to Time Series</li>
+      <li><b>MUSIC 198</b>: Decal: Learn to Play the Sather Tower Bells</li>
+    </ul>
+    <i>Fall 2024</i>
+    <ul>
+      <li><b>CS 271</b>: Randomness and Computation</li>
+      <li><b>CS 276</b>: Cryptography</li>
+      <li><b>MUSIC 159</b>: Computer Programming for Music Applications</li>
+    </ul>
+    <i>Spring 2024</i>
+    <ul>
+      <li><b>CS 168</b>: Introduction to the Internet: Architecture and Protocols</li>
+      <li><b>CS 278</b>: Computational Complexity Theory</li>
+      <li><b>EECS C106B</b>: Robotic Manipulation and Interaction</li>
+    </ul>
+    <i>Fall 2023</i>
+    <ul>
+      <li><b>CS 180</b>: Introduction to Computer Vision and Computational Photography</li>
+      <li><b>CS 285</b>: Deep Reinforcement Learning, Decision Making, and Control</li>
+      <li><b>CS 288</b>: Natural Language Processing</li>
+      <li><b>EECS C106A</b>: Introduction to Robotics</li>
+    </ul>
+    <i>Spring 2023</i>
+    <ul>
+      <li><b>CS 164</b>: Programming Languages and Compilers</li>
+      <li><b>CS 184</b>: Foundations of Computer Graphics</li>
+      <li><b>CS 270</b>: Combinatorial Algorithms and Data Structures
+        (<a href="../assets/pdf/CS270_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+      <li><b>MATH 128A</b>: Numerical Analysis</li>
+    </ul>
+    <i>Fall 2022</i>
+    <ul>
+      <li><b>CS 161</b>: Computer Security</li>
+      <li><b>CS 172</b>: Computability and Complexity
+        (<a href="../assets/pdf/CS172_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+      <li><b>MATH 113</b>: Introduction to Abstract Algebra
+        (<a href="../assets/pdf/MATH113_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+      <li><b>MATH 116</b>: Cryptography</li>
+    </ul>
+    <i>Spring 2022</i>
+    <ul>
+      <li><b>CS 162</b>: Operating Systems and Systems Programming</li>
+      <li><b>CS 189</b>: Introduction to Machine Learning
+        (<a href="../assets/pdf/CS189_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+      <li><b>MATH 185</b>: Introduction to Complex Analysis
+        (<a href="../assets/pdf/MATH185_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+      <li><b>PHILOS 12A</b>: Introduction to Logic</li>
+    </ul>
+    <i>Fall 2021</i>
+    <ul>
+      <li><b>CS 170</b>: Efficient Algorithms and Intractable Problems
+        (<a href="../assets/pdf/CS170_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+      <li><b>EECS 127</b>: Optimization Models in Engineering</li>
+      <li><b>MATH 104</b>: Introduction to Analysis</li>
+      <li><b>MATH 110</b>: Linear Algebra
+        (<a href="../assets/pdf/MATH110_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+    </ul>
+    <i>Summer 2021</i>
+    <ul>
+      <li><b>CS 61C</b>: Great Ideas of Computer Architecture (Machine Structures)</li>
+      <li><b>MUSIC 158A</b>: Sound and Music Computing with CNMAT Technologies</li>
+      <li><b>LING R1B</b>: Endangered Languages: Why does linguistic diversity matter?</li>
+    </ul>
+    <i>Spring 2021</i>
+    <ul>
+      <li><b>CS 61B</b>: Data Structures</li>
+      <li><b>EECS 16B</b>: Designing Information Devices and Systems II</li>
+      <li><b>EECS 126</b>: Probability and Random Processes
+        (<a href="../assets/pdf/EECS126_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+      <li><b>LING 100</b>: Introduction to Linguistics
+        (<a href="../assets/pdf/LING100_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
+      </li>
+      <li><b>MUSIC 128</b>: Topics in the History of Music
+        (Music in Chinese History: From Ancient Kings to Manchu Conquerors)</li>
+    </ul>
+    <i>Fall 2020</i>
+    <ul>
+      <li><b>CS 61A</b>: Structure and Interpretation of Computer Programs</li>
+      <li><b>EECS 16A</b>: Designing Information Devices and Systems I
+        (<a href="../assets/pdf/EECS16A_Cheatsheet.pdf" target="_blank">cheatsheet</a>)
+      </li>
+      <li><b>GEOG 10AC</b>: Worldings: Regions, Peoples and States</li>
+      <li><b>INTEGBI 35AC</b>: Human Biological Variation</li>
+    </ul>
+    <i>Summer 2020</i>
+    <ul>
+      <li><b>CS 70</b>: Discrete Mathematics and Probability
+        (<a href="../assets/pdf/CS70_Cheatsheet.pdf" target="_blank">cheatsheet</a>)
+      </li>
+    </ul>
+  </main>
+  <footer class="footer bg-light">
+    <div class="container-sm container-scale">
+      Copyright &copy; 2025 Alec Li
+    </div>
+  </footer>
+</body>
 
-      <p>Below is a list of some additional courses I have taken at UC Berkeley:</p>
-
-      <ul>
-        <li><b>LING 100</b>: Introduction to Linguistics
-          (<a href="../assets/pdf/LING100_Lecture_Notes.pdf" target="_blank">lecture notes</a>)
-        </li>
-        <li><b>MUSIC 158A</b>: Sound and Music Computing with CNMAT Technologies</li>
-      </ul>
-    </main>
-    <footer class="footer bg-light">
-      <div class="container-sm container-scale">
-        Copyright &copy; 2021 Alec Li
-      </div>
-    </footer>
-  </body>
 </html>

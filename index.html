@@ -1,224 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Alec Li</title>
-    <link href="favicon.ico" rel="icon"/>
 
-    <!--  Bootstrap  -->
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
-    <script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Alec Li</title>
+  <link href="favicon.ico" rel="icon" />
+
+  <!--  Bootstrap  -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
+  <script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!--  Styles  -->
-    <link href="css/styles.css" rel="stylesheet"/>
+  <!--  Styles  -->
+  <link href="css/styles.css" rel="stylesheet" />
 
-    <!--  Fonts  -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+  <!--  Fonts  -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
-    <!--  Feature detection  -->
-    <script src="js/modernizr.js"></script>
-    <!--  Handle fallback with browsers that don't support webp  -->
-    <script src="js/convert_webp.js"></script>
+  <!--  Feature detection  -->
+  <script src="js/modernizr.js"></script>
+  <!--  Handle fallback with browsers that don't support webp  -->
+  <script src="js/convert_webp.js"></script>
 
-    <!--  Masonry JS  -->
-    <script async src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <!--  Masonry JS  -->
+  <script async src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
-    <!-- Google tag for site analytics (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W6YVCZH4SR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag for site analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W6YVCZH4SR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      gtag('config', 'G-W6YVCZH4SR');
-    </script>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
-      <div class="container-sm container-scale">
-        <a class="navbar-brand">
-          <img class="nav-icon" alt="Phi" data-fallback-filetype="png"
-            draggable="false" src="assets/img/Phi-icon.webp"/>
-          <span class="nav-text">Alec Li</span>
-        </a>
-        <button class="navbar-toggler" aria-controls="navbar-right" aria-expanded="false" aria-label="Toggle navigation"
-          data-bs-target="#navbar-right" data-bs-toggle="collapse" type="button">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navbar-right" class="collapse navbar-collapse ms-auto">
-          <ul class="navbar-nav ms-auto mb-0 mb-sm-2">
-            <li class="nav-item">
-              <a class="nav-link active">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" aria-expanded="false" href="coursework" role="button">
-                Coursework
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="coursework/latex.html">LaTeX</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="teaching">Teaching</a>
-            </li>
-          </ul>
+    gtag('config', 'G-W6YVCZH4SR');
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+    <div class="container-sm container-scale">
+      <a class="navbar-brand">
+        <img class="nav-icon" alt="Phi" data-fallback-filetype="png" draggable="false" src="assets/img/Phi-icon.webp" />
+        <span class="nav-text">Alec Li</span>
+      </a>
+      <button class="navbar-toggler" aria-controls="navbar-right" aria-expanded="false" aria-label="Toggle navigation"
+        data-bs-target="#navbar-right" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbar-right" class="collapse navbar-collapse ms-auto">
+        <ul class="navbar-nav ms-auto mb-0 mb-sm-2">
+          <li class="nav-item">
+            <a class="nav-link active">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" aria-expanded="false" href="coursework" role="button">
+              Coursework
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="coursework/latex.html">LaTeX</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="teaching">Teaching</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-sm container-scale">
+    <div id="intro-div" class="container-fluid flex-row align-items-center mx-auto justify-content-center">
+      <div id="intro-left">
+        <img id="img-headshot" class="d-block mx-auto" alt="Alec Li" data-fallback-filetype="jpg"
+          src="assets/img/alec-li-sather-cropped.webp" />
+        <div id="intro-links">
+          <a class="text-decoration-none" href="https://www.linkedin.com/in/-alecli" target="_blank">
+            <img class="intro-link" alt="LinkedIn Profile" aria-label="LinkedIn Profile Link"
+              data-fallback-filetype="png" src="assets/img/LI-In-Bug.webp" title="LinkedIn Profile" />
+          </a>
+          <a class="text-decoration-none" href="https://github.com/smartspot2" target="_blank">
+            <img class="intro-link" alt="GitHub Profile" aria-label="GitHub Profile Link" data-fallback-filetype="png"
+              src="assets/img/GitHub-Mark-32px.webp" title="GitHub Profile" />
+          </a>
+          <a id="intro-email-link" class="text-decoration-none">
+            <img class="intro-link" alt="Email Address" aria-label="Copy Personal Email Address"
+              src="assets/img/envelope.svg" title="Personal Email" />
+          </a>
         </div>
       </div>
-    </nav>
+      <div id="intro-right" class="container-fluid">
+        <h2>Hi!</h2>
+        <p>
+          My name is Alec Li and I'm a software engineer at Meta in Menlo Park,
+          having graduated from UC Berkeley with an MS in EECS in 2025,
+          and a BA in Computer Science and Applied Mathematics in 2024.
+        </p>
+        <p>
+          I also enjoy composing music, playing tetris, swimming, and tackling puzzles I find on the internet!
+        </p>
+      </div>
+    </div>
 
-    <main class="container-sm container-scale">
-      <div id="intro-div" class="container-fluid flex-row align-items-center mx-auto justify-content-center">
-        <div id="intro-left">
-          <img id="img-headshot" class="d-block mx-auto" alt="Alec Li" data-fallback-filetype="jpg"
-            src="assets/img/AlecLi.webp"/>
-          <div id="intro-links">
-            <a class="text-decoration-none" href="https://www.linkedin.com/in/alec-li-84745b168/" target="_blank">
-              <img class="intro-link" alt="LinkedIn Profile" aria-label="LinkedIn Profile Link"
-                data-fallback-filetype="png" src="assets/img/LI-In-Bug.webp"
-                title="LinkedIn Profile"/>
+    <div class="section-spacing"></div>
+
+    <h3>Research</h3>
+
+    <div class="research-cards">
+
+      <div class="card">
+        <div class="card-header d-flex flex-column">
+          <div class="d-flex flex-row justify-content-between">
+            <a class="research-link" href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2025/EECS-2025-61.html"
+              target="_blank">
+              Enforcing Least Privilege Cross-Cloud Resource Access for Cloud Orchestrators
             </a>
-            <a class="text-decoration-none" href="https://github.com/smartspot2" target="_blank">
-              <img class="intro-link" alt="GitHub Profile" aria-label="GitHub Profile Link"
-                data-fallback-filetype="png" src="assets/img/GitHub-Mark-32px.webp"
-                title="GitHub Profile"/>
+            <p class="research-year">2025</p>
+          </div>
+          <p>
+            <b>Alec Li</b>,
+            Samyu Yagati,
+            Raluca Popa
+          </p>
+        </div>
+        <div class="card-body research-body">
+          <img class="research-img" alt="Skydentity Logo" src="assets/img/crosscloud-diagram.jpg" />
+          <div class="research-abstract">
+            <p>
+              As cloud computing systems evolve over time, there has been an increased dependency on systems that span
+              across multiple cloud providers, leading to the increased usage of workload orchestrator services, to
+              assist with the deployment and management of workloads among multiple clouds. However, the workload
+              orchestrators that exist today all require the end user to disclose their cloud credentials—this means
+              that an adversary that compromises a workload orchestrator can access resources in the user's cloud.
+            </p>
+            <p>
+              Recently, Skydentity solves one aspect of this security issue, by introducing a system that protects
+              against orchestrator compromise, ensuring that workload orchestrators never hold any cloud credentials,
+              and utilizing proxies that enforce fine-grained user-specified authorization policies. However, VMs
+              created through Skydentity do not have the ability to request resources across clouds, limiting the scope
+              of workloads that can utilize Skydentity.
+            </p>
+            <p>
+              We introduce an extension of Skydentity that allows for VMs created by workload orchestrators to access
+              resources across clouds, while maintaining the security guarantees of Skydentity, protecting against
+              orchestrator compromise. Our prototype introduces an added latency of at most 3% during VM creation, and
+              has negligible effect on subsequent cross-cloud resource requests.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header d-flex flex-column">
+          <div class="d-flex flex-row justify-content-between">
+            <a class="research-link" href="https://sky.cs.berkeley.edu/project/skydentity/" target="_blank">
+              Skydentity: Enforcing Least-Priviledge for Cloud Orchestrators
             </a>
-            <a id="intro-email-link" class="text-decoration-none">
-              <img class="intro-link" alt="Email Address"
-                aria-label="Copy Personal Email Address" src="assets/img/envelope.svg"
-                title="Personal Email"/>
+            <p class="research-year">2025</p>
+          </div>
+          <p>
+            Samyu Yagati,
+            <b>Alec Li</b>,
+            Karthik Dharmarajan,
+            Romil Bhardwaj,
+            Sam Kumar,
+            Raluca Popa,
+            Malte Schwarzkopf,
+            Ion Stoica
+          </p>
+        </div>
+        <div class="card-body research-body">
+          <img class="research-img small" alt="Skydentity Logo" src="assets/img/skydentity_logo.png" />
+          <div class="research-abstract">
+            <p>
+              Today’s cloud applications increasingly rely on third-party workload orchestration services that assist
+              with provisioning of cloud resources. Unfortunately, such services require users to hand over their cloud
+              credentials. An attacker who compromises a workload orchestrator can therefore access sensitive data and
+              code in the user’s cloud deployment.
+            </p>
+            <p>
+              Skydentity solves this problem with request permissions, which decouple the permission to manage resources
+              from the permission to access resources. To do so without cooperation from cloud providers, we implement
+              Skydentity as a proxy that interposes on workload orchestrator requests to cloud providers, checks them
+              against user-provided policies, and provides credentials only to authorized requests. Using a design
+              inspired by capability-oriented authorization, Skydentity restricts the operations a workload orchestrator
+              can perform to those pre-authorized by a user policy, and always prevents the workload orchestrator from
+              accessing user credentials.
+            </p>
+            <p>
+              Our prototype of Skydentity supports a range of typical workload orchestration use cases, such as job
+              management, data management, and analytics, and imposes modest overheads. Added cost is 1.75 cents or less
+              for a typical workload, and latency overheads are at most 3% for VM-based jobs and 20% for storage jobs on
+              clouds that support scoped tokens.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-spacing"></div>
+
+
+    <h3>Projects</h3>
+
+    <div id="projects" data-masonry='{"itemSelector": ".project-card"}'>
+      <div class="card project-card">
+        <div class="card-header d-flex flex-row align-items-center">
+          <span class="project-card-title">
+            <b>Ed API</b>
+          </span>
+          <div class="card-links">
+            <a class="pypi-link" href="https://pypi.org/project/edapi" target="_blank">
+              <img class="pypi-img" alt="Github" aria-label="EdStem API PyPI Link" src="assets/img/pypi.svg">
+            </a>
+            <a class="github-link" href="https://github.com/smartspot2/edapi" target="_blank">
+              <img class="github-img" alt="Github" aria-label="EdStem API GitHub Link" data-fallback-filetype="png"
+                src="assets/img/GitHub-Mark-32px.webp">
             </a>
           </div>
         </div>
-        <div id="intro-right" class="container-fluid">
-          <h2>Hi!</h2>
-          <p>My name is Alec Li and I'm a Computer Science and Applied Math double major at UC Berkeley.</p>
-          <p>I also enjoy composing music, playing tetris, swimming, and tackling random puzzles I find on the internet.</p>
+        <div class="card-body">
+          An (unofficial) integration of the Ed API with Python. Various API endpoints were reverse engineered and
+          documented, supporting a wide variety of actions.
         </div>
       </div>
 
-      <h3>Projects</h3>
-
-      <div id="projects" data-masonry='{"itemSelector": ".project-card"}'>
-        <div class="card project-card">
-          <div class="card-header d-flex flex-row align-items-center">
-            <a class="text-decoration-none project-card-title"
-              href="https://smartspot2.github.io/canvas-grade-calculator" target="_blank">
-              <b>Canvas Grade Calculator</b>
-            </a>
-            <a class="github-link"
-              href="https://github.com/smartspot2/canvas-grade-calculator" target="_blank">
+      <div class="card project-card">
+        <div class="card-header d-flex flex-row align-items-center">
+          <a class="text-decoration-none project-card-title" href="https://smartspot2.github.io/canvas-grade-calculator"
+            target="_blank">
+            <b>Canvas Grade Calculator</b>
+          </a>
+          <div class="card-links">
+            <a class="github-link" href="https://github.com/smartspot2/canvas-grade-calculator" target="_blank">
               <img class="github-img" alt="Github" aria-label="Canvas Grade Calculator GitHub Link"
-                data-fallback-filetype="png"
+                data-fallback-filetype="png" src="assets/img/GitHub-Mark-32px.webp">
+            </a>
+          </div>
+        </div>
+        <img class="card-img-top project-img" alt="Canvas Grade Calculator"
+          aria-label="Example of Canvas Grade Calculator use" data-fallback-filetype="jpg"
+          src="assets/img/CanvasGradeCalculator.webp" />
+        <div class="card-body">
+          A website built with Angular and Typescript to help students
+          easily manage, calculate, and predict grades in classes that use Canvas LMS.
+
+          Includes a text parser to convert raw pasted webpage text into Angular components,
+          utilizing local browser storage to persist parsed data.
+
+          Grade distributions for assignments are also illustrated in responsive box plots with d3.js.
+        </div>
+      </div>
+
+      <div class="card project-card">
+        <div class="card-header d-flex flex-row align-items-center">
+          <a class="text-decoration-none project-card-title" href="https://smartspot2.github.io/geo10-map-quiz"
+            target="_blank">
+            <b>GEOG10 Map Quizzes</b>
+          </a>
+          <div class="card-links">
+            <a class="github-link" href="https://github.com/smartspot2/geo10-map-quiz" target="_blank">
+              <img class="github-img" alt="Github" aria-label="GEOG10 Map Quiz GitHub Link" data-fallback-filetype="png"
                 src="assets/img/GitHub-Mark-32px.webp">
             </a>
           </div>
-          <img class="card-img-top project-img"
-            alt="Canvas Grade Calculator" aria-label="Example of Canvas Grade Calculator use"
-            data-fallback-filetype="jpg"
-            src="assets/img/CanvasGradeCalculator.webp"/>
-          <div class="card-body">
-            A website built with Angular and Typescript to help students
-            easily manage, calculate, and predict grades in classes that use Canvas LMS.
-
-            Includes a text parser to convert raw pasted webpage text into Angular components,
-            utilizing local browser storage to persist parsed data.
-
-            Grade distributions for assignments are also illustrated in responsive box plots with d3.js.
-          </div>
         </div>
+        <img class="card-img-top project-img" alt="GEOG10 Map Quiz" aria-label="Example of GEOG10 Map Quiz use"
+          data-fallback-filetype="jpg" src="assets/img/Geo10MapQuiz.webp" />
+        <div class="card-body">
+          A website built in vanilla HTML and JS, with manually edited SVG maps
+          to help students in Berkeley's GEOG10 course with map quizzes of all continents and the world map.
 
-        <div class="card project-card">
-          <div class="card-header d-flex flex-row align-items-center">
-            <a class="text-decoration-none project-card-title"
-              href="https://smartspot2.github.io/geo10-map-quiz" target="_blank">
-              <b>GEOG10 Map Quizzes</b>
-            </a>
-            <a class="github-link"
-              href="https://github.com/smartspot2/geo10-map-quiz" target="_blank">
-              <img class="github-img" alt="Github" aria-label="GEOG10 Map Quiz GitHub Link"
-                data-fallback-filetype="png"
-                src="assets/img/GitHub-Mark-32px.webp">
-            </a>
-          </div>
-          <img class="card-img-top project-img"
-            alt="GEOG10 Map Quiz" aria-label="Example of GEOG10 Map Quiz use"
-            data-fallback-filetype="jpg"
-            src="assets/img/Geo10MapQuiz.webp"/>
-          <div class="card-body">
-            A website built in vanilla HTML and JS, with manually edited SVG maps
-            to help students in Berkeley's GEOG10 course with map quizzes of all continents and the world map.
-
-            Utilizes JavaScript to handle timers and quiz functionality,
-            including the scrollable and resizable map interface.
-          </div>
+          Utilizes JavaScript to handle timers and quiz functionality,
+          including the scrollable and resizable map interface.
         </div>
+      </div>
 
-        <div class="card project-card">
-          <div class="card-header d-flex flex-row align-items-center">
-            <span class="project-card-title">
-              <b>Sorting Visualizer</b>
-            </span>
-            <a class="github-link"
-              href="https://github.com/smartspot2/sort-visualization" target="_blank">
+      <div class="card project-card">
+        <div class="card-header d-flex flex-row align-items-center">
+          <span class="project-card-title">
+            <b>Sorting Visualizer</b>
+          </span>
+          <div class="card-links">
+            <a class="github-link" href="https://github.com/smartspot2/sort-visualization" target="_blank">
               <img class="github-img" alt="Github" aria-label="Sorting Visualizer Github Link"
-                data-fallback-filetype="png"
+                data-fallback-filetype="png" src="assets/img/GitHub-Mark-32px.webp">
+            </a>
+          </div>
+        </div>
+        <div id="sorting-visualizer-div" class="img-crop freezeframe">
+          <img class="card-img-top project-img freezeframe-overlay" alt="Sorting Visualizer"
+            aria-label="Sorting Visualizer Example" data-fallback-filetype="gif"
+            src="assets/img/RadixSortLSD_preview.webp" />
+          <img id="sorting-visualizer" class="card-img-top project-img freezeframe-gif" alt="Sorting Visualizer"
+            data-fallback-filetype="gif" src="assets/img/RadixSortLSD.webp" />
+        </div>
+        <div class="card-body">
+          A Processing 3 and JavaFX applet for visualizing 20+ different kinds of sorts.
+
+          All sorts are animated and annotated with highlights and short descriptions at each step.
+          Also includes documentation for each sort, describing the algorithm and time/space complexities.
+        </div>
+      </div>
+
+      <div class="card project-card">
+        <div class="card-header d-flex flex-row align-items-center">
+          <a class="text-decoration-none project-card-title" href="https://smartspot2.github.io/tetris-ai"
+            target="_blank">
+            <b>Tetris AI</b>
+          </a>
+          <div class="card-links">
+            <a class="github-link" href="https://github.com/smartspot2/tetris-ai" target="_blank">
+              <img class="github-img" alt="Github" aria-label="Tetris AI GitHub Link" data-fallback-filetype="png"
                 src="assets/img/GitHub-Mark-32px.webp">
             </a>
           </div>
-          <div id="sorting-visualizer-div" class="img-crop freezeframe">
-            <img class="card-img-top project-img freezeframe-overlay"
-              alt="Sorting Visualizer" aria-label="Sorting Visualizer Example"
-              data-fallback-filetype="gif"
-              src="assets/img/RadixSortLSD_preview.webp"/>
-            <img id="sorting-visualizer"
-              class="card-img-top project-img freezeframe-gif"
-              alt="Sorting Visualizer" data-fallback-filetype="gif"
-              src="assets/img/RadixSortLSD.webp"/>
-          </div>
-          <div class="card-body">
-            A Processing 3 and JavaFX applet for visualizing 20+ different kinds of sorts.
-
-            All sorts are animated and annotated with highlights and short descriptions at each step.
-            Also includes documentation for each sort, describing the algorithm and time/space complexities.
-          </div>
         </div>
+        <img class="card-img-top project-img" alt="Tetris AI" data-fallback-filetype="jpg"
+          src="assets/img/TetrisAI.webp" />
+        <div class="card-body">
+          A web app built with p5.js, simulating the traditional game of Tetris.
 
-        <div class="card project-card">
-          <div class="card-header d-flex flex-row align-items-center">
-            <a class="text-decoration-none project-card-title"
-              href="https://smartspot2.github.io/tetris-ai" target="_blank">
-              <b>Tetris AI</b>
-            </a>
-            <a class="github-link"
-              href="https://github.com/smartspot2/tetris-ai" target="_blank">
-              <img class="github-img" alt="Github" aria-label="Tetris AI GitHub Link"
-                data-fallback-filetype="png"
-                src="assets/img/GitHub-Mark-32px.webp">
-            </a>
-          </div>
-          <img class="card-img-top project-img"
-            alt="Tetris AI" data-fallback-filetype="jpg" src="assets/img/TetrisAI.webp"/>
-          <div class="card-body">
-            A web app built with p5.js, simulating the traditional game of Tetris.
-
-            Includes a fully configurable AI using a fitness score
-            composed of various statistics like
-            line clears, board height, number of holes, etc.
-          </div>
+          Includes a fully configurable AI using a fitness score
+          composed of various statistics like
+          line clears, board height, number of holes, etc.
         </div>
       </div>
-    </main>
-    <footer class="footer bg-light">
-      <div class="container-sm container-scale">
-        Copyright &copy; 2021 Alec Li
-      </div>
-    </footer>
+    </div>
 
-    <!--  Handle gif freezing, email copying  -->
-    <script src="js/utils.js"></script>
-  </body>
+  </main>
+
+  <footer class="footer bg-light">
+    <div class="container-sm container-scale">
+      Copyright &copy; 2025 Alec Li
+    </div>
+  </footer>
+
+  <!--  Handle gif freezing, email copying  -->
+  <script src="js/utils.js"></script>
+</body>
+
 </html>
